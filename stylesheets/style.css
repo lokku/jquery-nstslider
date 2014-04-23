@@ -200,6 +200,10 @@ h2 {
   font-size: 34px;
   margin-top: 0;
 }
+#disqus {
+  width: 800px;
+  margin: 0 auto;
+}
 #features {
   text-align: center;
   color: #113344;
@@ -252,7 +256,6 @@ section {
   color: #5b83ad;
   margin: 0;
   padding: 75px 0;
-  height: 100px;
 }
 #get_it h2 {
   background: #113344;
