@@ -1,7 +1,7 @@
 {
     "name": "nstSlider",
     "version": "1.0.0",
-    "main": "jquery.nstSlider.js",
+    "main": [ "./jquery.nstSlider.js" ],
     "ignore": [
         ".jshintrc",
         "**/*.txt"
