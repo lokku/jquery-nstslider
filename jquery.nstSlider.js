@@ -1353,6 +1353,9 @@
 
             $this.removeData('pixel_to_value_mapping');
             $this.removeData('value_to_pixel_mapping');
+            $this.removeData('last_step_histogram');
+
+            return $this;
         },
         'set_range' : function (rangeMin, rangeMax) {
             var $this = this;
