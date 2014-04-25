@@ -69,7 +69,7 @@ return __p;
 templates['distributionBasedIncrementsMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="40"\n    data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<div id="changeStepIncrement">Use Histogram-Based Increment Step</div>\n';
+__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="40"\n    data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a id="changeStepIncrement" onclick="return false;">Use Histogram-Based Increment Step</a>\n';
 }
 return __p;
 }
@@ -145,7 +145,7 @@ return __p;
 templates['rangeHighlightMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="10"\n    data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<div id="highlightRangeButton">Highlight Range</div>\n';
+__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="10"\n    data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a href="#" onclick="return false;" id="highlightRangeButton">Highlight Range</a>\n';
 }
 return __p;
 }

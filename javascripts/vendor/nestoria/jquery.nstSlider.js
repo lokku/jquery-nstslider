@@ -760,12 +760,6 @@
 
             var have_limits = _methods.haveLimits.call($this);
 
-            if (typeof rounding === 'undefined') {
-
-                if (typeof settings.rounding === 'undefined') {
-                    $.error("the data-rounding attribute was not specified, or rounding was not provided in input");
-                }
-            }
             if (typeof min_value === 'undefined') {
                 $.error("the data-range_min attribute was not defined");
             }
@@ -881,7 +875,7 @@
                 //    '10' : '1000',  /* rounding = 10 for values in [100-999] */
                 //    '50' : '10000',
                 // }
-                'rounding': 1,
+                'rounding': undefined,
 
                 // if the bar is not wanted
                 'value_bar_selector': undefined,
@@ -955,8 +949,11 @@
                 if (typeof settings.rounding !== 'undefined') {
                     methods.set_rounding.call($this, settings.rounding);
                 }
-                else {
+                else if (typeof $this.data('rounding') !== 'undefined') {
                     methods.set_rounding.call($this, $this.data('rounding'));
+                }
+                else {
+                    methods.set_rounding.call($this, 1);
                 }
                 
                 var left_grip = $this.find(settings.left_grip_selector)[0],
