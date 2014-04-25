@@ -760,12 +760,6 @@
 
             var have_limits = _methods.haveLimits.call($this);
 
-            if (typeof rounding === 'undefined') {
-
-                if (typeof settings.rounding === 'undefined') {
-                    $.error("the data-rounding attribute was not specified, or rounding was not provided in input");
-                }
-            }
             if (typeof min_value === 'undefined') {
                 $.error("the data-range_min attribute was not defined");
             }
