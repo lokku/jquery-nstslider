@@ -69,19 +69,16 @@ define(['jquery', 'templates'],
                         'type' : 'function',
                         'default' : 'function () { return; }',
                         'description' : 'a callback called before the user drags one of the handles'
+                      },
+                      {
+                        'name' : 'highlight',
+                        'type' : 'object',
+                        'default' : 'undefined',
+                        'description' : 'the settings for highlighting a range via the highlight_range method. This parameter is an object like: <pre>{ "grip_class" : "someCssClass", "panel_selector" : ".someJquerySelector" }</pre>, where grip_class is a css class name (note: no "." or "#") that will be set to a grip if it falls within the highlighted range, and panel selector is the selector for the panel representing the highlighted range in the markup.',
                       }
                 ]
               }));
           };
-
-          // Specify highlight like this if you want to highlight a range
-          // in the slider.
-          //
-          // 'highlight' : {
-          //     'grip_class' : '.nsti-slider-hi',
-          //     'panel_selector' : '.nst-slider-highlight-panel'
-          // },
-          // 'highlight' : undefined,
 
           return SettingsView;
 

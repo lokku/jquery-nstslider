@@ -7,7 +7,7 @@ define(['vendor/underscore'], function (_) { var templates = {};
 templates['basicSliderMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-rounding="1"\n    data-range_min="-10"\n    data-range_max="100"\n    data-cur_min="20"\n    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed outside the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
+__p+='<div class="slider"\n    data-range_min="-10"\n    data-range_max="100"\n    data-cur_min="20"\n    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
 }
 return __p;
 }
@@ -23,21 +23,53 @@ __p+='<section id="'+
 ((__t=( id ))==null?'':__t)+
 '" class="demo">\n    <h2>'+
 ((__t=( title ))==null?'':__t)+
-'</h2>\n    <div class="widget">\n        '+
+'</h2>\n    ';
+ if (typeof description !== 'undefined') { 
+__p+='\n    <div class="description">\n        '+
+((__t=( description ))==null?'':__t)+
+'\n    </div>\n    ';
+ } 
+__p+='\n    <div class="widget">\n        '+
 ((__t=( markup ))==null?'':__t)+
 '\n        <script type="text/javascript">\n            $(\'#'+
 ((__t=( id ))==null?'':__t)+
-' .'+
+'\').find(\'.'+
 ((__t=( pluginClass ))==null?'':__t)+
 '\').'+
 ((__t=( pluginName ))==null?'':__t)+
 '(\n                '+
 ((__t=( pluginOptions ))==null?'':__t)+
-'\n            );\n        </script>\n    </div>\n    <h3>HTML</h3>\n    <pre class="prettyprint lang-html">\n'+
+'\n            );\n            ';
+ if (typeof extraJavascript !== 'undefined') { 
+__p+='\n            ';
+ var jsReplaced = extraJavascript.replace(/__PLUGIN_CLASS__/g, '$(\'#' + id + '\').find(\'.' + pluginClass + '\')'); 
+__p+='\n                '+
+((__t=( jsReplaced ))==null?'':__t)+
+'\n            ';
+ } 
+__p+='\n        </script>\n    </div>\n    <h3>HTML</h3>\n    <pre class="prettyprint lang-html">\n'+
 ((__t=( markup_escaped ))==null?'':__t)+
 '\n    </pre>\n    <h3>Javascript</h3>\n    <pre class="prettyprint lang-javascript linenums">\n$(\'.slider\').nstSlider('+
 ((__t=( pluginOptions ))==null?'':__t)+
-');</pre>\n</section>\n';
+');\n';
+ if (typeof extraJavascript !== 'undefined') { 
+__p+=''+
+((__t=( extraJavascript.replace(/__PLUGIN_CLASS__/g, '\'.' + pluginClass + '\'') ))==null?'':__t)+
+'';
+ } 
+__p+='</pre>\n</section>\n';
+}
+return __p;
+}
+
+//
+// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
+// Template name: [distributionBasedIncrementsMarkup]
+//
+templates['distributionBasedIncrementsMarkup'] = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="40"\n    data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<div id="changeStepIncrement">Use Histogram-Based Increment Step</div>\n';
 }
 return __p;
 }
@@ -107,6 +139,18 @@ return __p;
 }
 
 //
+// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
+// Template name: [rangeHighlightMarkup]
+//
+templates['rangeHighlightMarkup'] = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="10"\n    data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<div id="highlightRangeButton">Highlight Range</div>\n';
+}
+return __p;
+}
+
+//
 // Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/scrollSpy.tpl]
 // Template name: [scrollSpy]
 //
@@ -135,7 +179,7 @@ return __p;
 templates['singleHandlerSlider'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-rounding="1"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="slider"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }
@@ -147,7 +191,7 @@ return __p;
 templates['singleHandlerSliderFixedBar'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-rounding="1"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="80"\n    data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="slider"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="80"\n    data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }

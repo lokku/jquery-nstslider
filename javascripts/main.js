@@ -7,7 +7,7 @@
       prettify: 'vendor/google-code-prettify/prettify',
       nstSlider: 'vendor/nestoria/jquery.nstSlider',
       jsbeautify: 'vendor/js-beautify/beautify',
-      scrollspy: 'vendor/jquery-scrollspy/scrollspy',
+      dotimeout: 'vendor/ba-dotimeout/jquery.ba-dotimeout.min',
       scrollTo: 'vendor/jquery.scrollTo/jquery.scrollTo'
     }
   });
