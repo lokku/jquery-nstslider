@@ -753,8 +753,6 @@
             var min_value = $this.data('range_min'),
                 max_value = $this.data('range_max'),
                 cur_min = $this.data('cur_min'),
-                cur_max = $this.data('cur_max'),
-                rounding = $this.data('rounding'),
                 lower_limit = $this.data('lower-limit'),
                 upper_limit = $this.data('upper-limit');
 
