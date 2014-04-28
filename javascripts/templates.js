@@ -1,19 +1,19 @@
 define(['vendor/underscore'], function (_) { var templates = {};
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/basicSliderMarkup.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/basicSliderMarkup.tpl]
 // Template name: [basicSliderMarkup]
 //
 templates['basicSliderMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="-10"\n    data-range_max="100"\n    data-cur_min="20"\n    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
+__p+='<div class="slider" data-range_min="-10" data-range_max="100" \n                    data-cur_min="20"    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
 }
 return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/demoSection.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/demoSection.tpl]
 // Template name: [demoSection]
 //
 templates['demoSection'] = function(obj){
@@ -63,19 +63,19 @@ return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
 // Template name: [distributionBasedIncrementsMarkup]
 //
 templates['distributionBasedIncrementsMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="40"\n    data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<!-- Labels are managed independently from the plugin -->\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a id="changeStepIncrement" onclick="return false;">Use Histogram-Based Increment Step</a>\n';
+__p+='<div class="slider" data-range_min="0" data-range_max="100" \n                    data-cur_min="40"  data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a id="changeStepIncrement" onclick="return false;">Use Histogram-Based Increment Step</a>\n';
 }
 return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginMethods.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginMethods.tpl]
 // Template name: [pluginMethods]
 //
 templates['pluginMethods'] = function(obj){
@@ -113,7 +113,7 @@ return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginSettings.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginSettings.tpl]
 // Template name: [pluginSettings]
 //
 templates['pluginSettings'] = function(obj){
@@ -139,25 +139,25 @@ return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
 // Template name: [rangeHighlightMarkup]
 //
 templates['rangeHighlightMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="0"\n    data-range_max="100"\n    data-cur_min="10"\n    data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a href="#" onclick="return false;" id="highlightRangeButton">Highlight Range</a>\n';
+__p+='<div class="slider" data-range_min="0" data-range_max="100"\n                    data-cur_min="10"  data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a href="#" onclick="return false;" id="highlightRangeButton">Highlight Random Range</a>\n';
 }
 return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/scrollSpy.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/scrollSpy.tpl]
 // Template name: [scrollSpy]
 //
 templates['scrollSpy'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<nav class="scrollspy">\n    <ul>\n        <li id="li_demo">Demo</li>\n        ';
+__p+='<nav class="scrollspy">\n    <ul>\n        ';
  for (var i=0; i<items.length; i++) { 
 __p+='\n        ';
  var item = items[i] 
@@ -173,25 +173,25 @@ return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSlider.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSlider.tpl]
 // Template name: [singleHandlerSlider]
 //
 templates['singleHandlerSlider'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="slider" data-range_min="-127" data-range_max="127" \n                    data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }
 
 //
-// Source file: [/home/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
+// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
 // Template name: [singleHandlerSliderFixedBar]
 //
 templates['singleHandlerSliderFixedBar'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider"\n    data-range_min="-127"\n    data-range_max="127"\n    data-cur_min="80"\n    data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="slider" data-range_min="-127" data-range_max="127"\n                    data-cur_min="80"     data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }

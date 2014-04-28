@@ -81,11 +81,6 @@ define(['jquery', 'templates'],
                         'description' : 'set the minimum and the maximum range of values the slider'
                       },
                       {
-                        'name' : 'highlight_range',
-                        'arguments' : ['fromValue: number', 'toValue: number'],
-                        'description' : 'highlights the specified range on the slider.'
-                      },
-                      {
                         'name' : 'set_rounding',
                         'arguments' : 'rounding: number or object',
                         'description' : 'set the rounding for the slider'
@@ -103,6 +98,15 @@ define(['jquery', 'templates'],
                 ]
               }));
           };
+
+          // Specify highlight like this if you want to highlight a range
+          // in the slider.
+          //
+          // 'highlight' : {
+          //     'grip_class' : '.nsti-slider-hi',
+          //     'panel_selector' : '.nst-slider-highlight-panel'
+          // },
+          // 'highlight' : undefined,
 
           return MethodsView;
 

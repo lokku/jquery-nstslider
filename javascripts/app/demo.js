@@ -156,7 +156,7 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
               $(element).append(templates.demoSection({
                   id: 'histogram_based',
                   title: 'Histogram-Based Increment Steps',
-                  description: '<p>With histogram-based increment step, the slider adjusts increments based on a certain input histogram.</p> <p>In this demo we use of a histogram that follows a normal distribution.</p> <p>As a result, more space of the slider is dedicated to let the central values of the range to be selected, and pixels towards the extremities of the slider will correspond to coarser increments.</p> <p>It really helps if you have only few pixels to dedicate to the slider and a broad range of values a user can slide over!</p>',
+                  description: '<p>With histogram-based increment step, the slider adjusts increments based on a certain input histogram.</p> <p>In this demo we use of a histogram that follows a normal distribution.</p> <p>As a result, more space of the slider is dedicated to let the central values of the range to be selected, and pixels towards the extremities of the slider will correspond to coarser increments.</p><p>This feature is really useful when you only have a few pixels to dedicate to the slider, but a broad range of values a user can select from!</p>',
 
                   markup: markup,
                   markup_escaped: markup.replace(/</g,'&lt;').replace(/>/g, '&gt;'),

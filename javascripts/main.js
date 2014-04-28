@@ -1,7 +1,6 @@
-(function() {
-
-  require({
-    urlArgs: "b=" + ((new Date()).getTime()),
+  require.config({
+    // urlArgs: "b=" + ((new Date()).getTime()),
+    urlArgs: "b=now",
     paths: {
       jquery: 'vendor/jquery/jquery',
       prettify: 'vendor/google-code-prettify/prettify',
@@ -11,37 +10,33 @@
       scrollTo: 'vendor/jquery.scrollTo/jquery.scrollTo'
     }
   });
+  require(['jquery'], function () {
 
-  require(['jquery'], function (dependency) {
-
-        require(['app/demo'], function(DemoView) {
-            //
-            // The demo section
-            //
-            var view = new DemoView();
-            view.render('#demo');
+    require(['app/demo'], function(DemoView) {
+        //
+        // The demo section
+        //
+        var view = new DemoView();
+        view.render('#demo');
 
 
-            //
-            // ScrollSpy
-            //
-            require(['app/scrollspy'], function(ScrollSpyView) {
-                var scrollSpyView = new ScrollSpyView();
-                scrollSpyView.render('#header');
-            });
-
+        //
+        // ScrollSpy
+        //
+        require(['app/scrollspy'], function(ScrollSpyView) {
+            var scrollSpyView = new ScrollSpyView();
+            scrollSpyView.render('#header');
         });
 
-        require(['app/settings'], function (SettingsView) {
-            var view = new SettingsView();
-            view.render('#settings');
-        });
+    });
 
-        require(['app/methods'], function (MethodsView) {
-            var view = new MethodsView();
-            view.render('#methods');
-        });
-  });
+    require(['app/settings'], function (SettingsView) {
+        var view = new SettingsView();
+        view.render('#settings');
+    });
 
-
-}).call(this);
+    require(['app/methods'], function (MethodsView) {
+        var view = new MethodsView();
+        view.render('#methods');
+    });
+});
