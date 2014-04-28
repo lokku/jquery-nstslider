@@ -1,0 +1,27 @@
+{
+  "name": "nstSlider",
+  "title": "Nestoria Slider",
+  "description": "Fully customizable sliders, Single/Double handles, Touch-enabled, and much more",
+  "version": "1.0.1",
+  "homepage": "http://lokku.github.io/jquery-nstslider/",
+  "author": {
+    "name": "Savio Dimatteo",
+    "email": "darksmo@gmail.com",
+    "url": "http://www.savio.dimatteo.it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lokku/jquery-nstslider.git"
+  },
+  "bugs": "https://github.com/lokku/jquery-nstslider/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://lokku.github.io/jquery-nstslider//blob/master/LICENCE"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
