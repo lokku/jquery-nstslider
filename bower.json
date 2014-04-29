@@ -17,7 +17,7 @@
   "dependencies": {
     "jquery": "latest"
   },
-  "homepage": "http://lokku.github.io/jquery-nstslider/"
+  "homepage": "http://lokku.github.io/jquery-nstslider/",
   "authors": [
     "Savio Dimatteo <darksmo@gmail.com>"
   ],
