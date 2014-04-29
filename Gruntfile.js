@@ -104,7 +104,5 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['less', 'jshint', 'qunit', 'clean', 'concat', 'uglify']);
- 
-  grunt.registerTask('default', ['watch']);
 
 };
