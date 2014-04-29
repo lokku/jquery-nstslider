@@ -852,6 +852,8 @@
             $container.unbind('touchstart.nstSlider');
             $container.unbind('touchmove.nstSlider');
             $container.unbind('touchend.nstSlider');
+
+            return $this;
         },
         'init' : function(options) {
             var settings = $.extend({
