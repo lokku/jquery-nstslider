@@ -778,12 +778,24 @@
                 $.error("Cannot find element pointed by left_grip_selector: " + settings.left_grip_selector);
             }
             /* 
-             * NOTE: not checking for right grip selector
-             * existance, assume that if it isn't found
-             * isn't there. This is because we initialize
-             * the slider at once and let the markup
-             * decide if the slider is there or not.
+             * NOTE: only validate right grip selector if it is not
+             * undefined otherwise just assume that if it isn't
+             * found isn't there. This is because we initialize the
+             * slider at once and let the markup decide if the
+             * slider is there or not.
              */
+            if (typeof settings.right_grip_selector !== 'undefined') {
+                if ($this.find(settings.right_grip_selector).length === 0) {
+                    $.error("Cannot find element pointed by right_grip_selector: " + settings.right_grip_selector);
+                }
+            }
+
+            // same thing for the value bar selector
+            if (typeof settings.value_bar_selector !== 'undefined') {
+                if ($this.find(settings.value_bar_selector).length === 0) {
+                    $.error("Cannot find element pointed by value_bar_selector" + settings.value_bar_selector);
+                }
+            }
         },
         /*
          * Maps a value between [minRange -- maxRange] into [0 -- n].
@@ -903,10 +915,9 @@
                 // $this is like:
                 //
                 // <div class="outer-slider" data-... data-...>
-                //     <div class="inner-slider">
-                //         <div class="left-grip"></div>
-                //         <div class="right-grip"></div>
-                //     </div>
+                //     <div class="bar"></div>
+                //     <div class="leftGrip"></div>
+                //     <div class="rightGrip"></div>
                 // </div>
                 //
                 // It is supposed to be enclosed in a container
