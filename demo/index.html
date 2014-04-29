@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>nstSlider.js Demo</title>
+
+        <!-- 1. Include CSS -->
+        <link type="text/css" rel="stylesheet" href="/dist/jquery.nstSlider.css">
+
+    </head>
+    <body>
+        <h1>Get started with jquery.nstSlider.js</h1>
+        <h2>(view source to see a step-by-step guide)</h2>
+
+        <!-- 2. Write markup for the slider -->
+        <div class="nstSlider" 
+            data-range_min="0" data-range_max="100"   
+            data-cur_min="10"  data-cur_max="90">     <!-- 2.1. add data attributes for the range: the min/max values the user can select -->
+                                                      <!-- 2.2. add the slider values: the initial values within the range the grips should be initially set at -->
+
+            <div class="highlightPanel"></div>        <!-- 2.3. (optional) you can use this in combination
+                                                                with highlight_range if you need to, or
+                                                                you can just omit it. Also, you can move
+                                                                this element after as well if you want to
+                                                                highlight above the slider grips -->
+
+            <div class="bar"></div>                   <!-- 2.4. (optional) this is the bar that fills the
+                                                                area between the left and the right grip -->
+                                                                
+            <div class="leftGrip"></div>              <!-- 2.5  the left grip -->
+            <div class="rightGrip"></div>             <!-- 2.6  (optional) the right grip. Just omit if 
+                                                                you don't need one -->
+        </div>
+
+        <!-- These two are actually exernal to the plugin, but you are likely to need them... the plugin
+             does the math, but it's up to you to update the content of these two elements. -->
+        <div class="leftLabel"></div>
+        <div class="rightLabel"></div>
+        
+        <!-- 3. Add jQuery -->
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+        <!-- 4. Add nstSlider.js after jQuery -->
+        <script src="/dist/jquery.nstSlider.min.js"></script>
+
+        <!-- 5. setup the slider! -->
+        <script>
+            $('.nstSlider').nstSlider({
+                "left_grip_selector": ".leftGrip",
+                "right_grip_selector": ".rightGrip",
+                "value_bar_selector": ".bar",
+                "highlight": {
+                    "grip_class": "gripHighlighted",
+                    "panel_selector": ".highlightPanel"
+                },
+                "value_changed_callback": function(cause, leftValue, rightValue) {
+                    $('.leftLabel').text(leftValue);
+                    $('.rightLabel').text(rightValue);
+                },
+            });
+
+            // Call methods and such...
+            var highlightMin = Math.random() * 20,
+                highlightMax = highlightMin + Math.random() * 80;
+            $('.nstSlider').nstSlider('highlight_range', highlightMin, highlightMax);
+        </script>
+    </body>
+</html>
