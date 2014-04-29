@@ -3,12 +3,38 @@ jquery.nstSlider.js
 
 [1]: <https://github.com/lokku/jquery-nstslider>
 
-Fully customizable sliders, Single/Double handles, Touch-enabled, and much more
+Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
+
+#### Example
+
+Initialize with:
+
+```javascript
+$(".mySlider").nstSlider({
+    "left_grip_selector": ".leftGrip",
+    "right_grip_selector": ".rightGrip",
+    "value_bar_selector": ".bar",
+    "value_changed_callback": function(cause, minValue, maxValue) {
+        // show the suggested values in your min/max labels elements
+    }
+});
+ ```
+
+Destroy with:
+
+```javascript
+$(".mySlider").nstSlider('teardown');
+```
 
 #### Demo
 
+For live demos please visit the project webpage:
+
 [http://lokku.github.io/jquery-nstslider/](http://lokku.github.io/jquery-nstslider/)
 
+For a Quick Start have a look at the source html of the following file:
+
+[https://github.com/lokku/jquery-nstslider/blob/master/demo/index.html](https://github.com/lokku/jquery-nstslider/blob/master/demo/index.html)
 
 #### Options
 
@@ -46,27 +72,6 @@ set_range | rangeMin : number, rangeMax : number | set the minimum and the maxim
 set_rounding | rounding: number or object | set the rounding for the slider
 get_rounding | None | return the current rounding of the slider
 teardown | None | remove all data stored in the slider
-
-#### Example
-
-Initialize with:
-
-```javascript
-$(element).nstSlider({
-    "left_grip_selector": ".leftGrip",
-    "right_grip_selector": ".rightGrip",
-    "value_bar_selector": ".bar",
-    "value_changed_callback": function(cause, leftValue, rightValue) {
-        // render the suggested values in your min/max labels elements
-    }
-});
- ```
-
-Destroy with:
-
-```javascript
-$(element).nstSlider('teardown');
-```
 
 #### Dependencies
 
