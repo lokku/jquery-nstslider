@@ -24,5 +24,13 @@
   "dependencies": {
     "jquery": "*"
   },
-  "keywords": []
+  "keywords": [
+    "ui",
+    "slider",
+    "values",
+    "select",
+    "control",
+    "nestoria",
+    "widget"
+  ]
 }

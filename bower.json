@@ -21,11 +21,15 @@
   "authors": [
     "Savio Dimatteo <darksmo@gmail.com>"
   ],
-  "description": "Nestoria Sliders jQuery Plugin",
+  "description": "Nestoria Slider jQuery Plugin",
   "keywords": [
     "ui",
     "slider",
-    "nestoria"
+    "values",
+    "select",
+    "control",
+    "nestoria",
+    "widget"
   ],
   "license": "MIT"
 }
