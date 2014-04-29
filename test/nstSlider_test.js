@@ -71,8 +71,8 @@
 
               notEqual(typeof $sliderDom.attr('data-' + attribute), 'undefined', 'buildSlider attribute ' + attribute + ' exists in markup');
 
-              $sliderDom.attr('data-' + attribute, sliderDataAttributes[attribute]); 
-              $sliderDom.data(attribute, sliderDataAttributes[attribute]); 
+              $sliderDom.attr('data-' + attribute, sliderDataAttributes[attribute]);
+              $sliderDom.data(attribute, sliderDataAttributes[attribute]);
           }
       }
 
@@ -178,15 +178,15 @@
       }
 
 
-      /* 
+      /*
        * Now test that validation is performed until ALL the required data-
        * attributes are added to the slider on which the error was thrown.
        */
       var sliderDataAttributes = {
           'rounding' : 10,
-          'range_min' : 10, 
+          'range_min' : 10,
           'range_max' : 110,
-          'cur_min' : 20,
+          'cur_min' : 20
       };
 
       var required_attributes = [
@@ -195,7 +195,7 @@
 
       // throw an exception until all parameters are set
       var total = required_attributes.length;
-      var mayThrowErrorFunc = function () { 
+      var mayThrowErrorFunc = function () {
           $(sliderThatThrowsErrors).nstSlider();
       };
       for (var i=0; i<total; i++) {
@@ -219,7 +219,7 @@
       // Check for more exception messages
       //
 
-      throws(function (){ 
+      throws(function (){
           $(that.sliders.basicSliderWithParametersAndNonDefaultLeftGrip).nstSlider({
               left_grip_selector : '.not-existing-selector'
           });
@@ -235,7 +235,7 @@
           ok(false, 'did throw exception when selector was specified');
       }
 
-      throws(function (){ 
+      throws(function (){
           $(that.sliders.basicSliderWithParametersAndNonDefaultRightGrip).nstSlider({
               right_grip_selector : '.not-existing-selector'
           });
@@ -264,7 +264,7 @@
         ok(true, 'no events bound to the document');
     }
     else {
-        ok(false, 'no events bound to the document, but got ' + 
+        ok(false, 'no events bound to the document, but got ' +
             boundEventList.join(', '));
     }
 
@@ -305,9 +305,9 @@
       // no limits defined
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 10,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 30, 
+          'cur_min' : 30,
           'cur_max' : 60
       });
       equal($slider.nstSlider('is_handle_to_left_extreme'), false);
@@ -318,9 +318,9 @@
         // no limits defined
         var $slider = buildSlider(this.sliders.sliderWithRounding, {
             'rounding' : 5,
-            'range_min' : 5, 
+            'range_min' : 5,
             'range_max' : 95,
-            'cur_min' : 5, 
+            'cur_min' : 5,
             'cur_max' : 60
         });
         equal($slider.nstSlider('is_handle_to_left_extreme'), true);
@@ -331,9 +331,9 @@
       // no limits defined
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 1,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 6, 
+          'cur_min' : 6,
           'cur_max' : 95
       });
 
@@ -347,9 +347,9 @@
       // no limits defined
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 5,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 30, 
+          'cur_min' : 30,
           'cur_max' : 60
       });
       equal($slider.nstSlider('is_handle_to_right_extreme'), false);
@@ -359,9 +359,9 @@
       // no limits defined
       $slider = buildSlider($slider, {
           'rounding' : 5,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 5, 
+          'cur_min' : 5,
           'cur_max' : 95
       });
       equal($slider.nstSlider('is_handle_to_right_extreme'), true);
@@ -371,21 +371,21 @@
       // no limits defined
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 7,
-          'range_min' : 2, 
+          'range_min' : 2,
           'range_max' : 10,
-          'cur_min' : 2, 
+          'cur_min' : 2,
           'cur_max' : 10
       });
       equal($slider.nstSlider('is_handle_to_right_extreme'), true);
       equal($slider.nstSlider('is_handle_to_left_extreme'), true);
   });
-  
+
 
   test("lets you access min/max range", function () {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 10,
           'range_min' : 5, 'range_max' : 95,
-          'cur_min' : 30,  'cur_max' : 60, 
+          'cur_min' : 30,  'cur_max' : 60,
           'upper-limit' : 100, 'lower-limit' : 1
       });
 
@@ -397,7 +397,7 @@
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 10,
           'range_min' : 5, 'range_max' : 95,
-          'cur_min' : 30,  'cur_max' : 60, 
+          'cur_min' : 30,  'cur_max' : 60,
           'upper-limit' : 100, 'lower-limit' : 1
       });
 
@@ -410,10 +410,10 @@
   test("tells you when lower limit hasn't been reached", function () {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 10,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 30, 
-          'cur_max' : 60, 
+          'cur_min' : 30,
+          'cur_max' : 60,
           'upper-limit' : 100,
           'lower-limit' : 1
       });
@@ -424,10 +424,10 @@
 
       buildSlider(($slider), {
           'rounding' : 5,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 5, 
-          'cur_max' : 60, 
+          'cur_min' : 5,
+          'cur_max' : 60,
           'upper-limit' : 100,
           'lower-limit' : 1
       });
@@ -440,10 +440,10 @@
   test("tells you when upper limit hasn't been reached", function () {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 5,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 30, 
-          'cur_max' : 60, 
+          'cur_min' : 30,
+          'cur_max' : 60,
           'upper-limit' : 100,
           'lower-limit' : 1
       });
@@ -453,10 +453,10 @@
 
       buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 5,
-          'range_min' : 5, 
+          'range_min' : 5,
           'range_max' : 95,
-          'cur_min' : 5, 
-          'cur_max' : 95, 
+          'cur_min' : 5,
+          'cur_max' : 95,
           'upper-limit' : 1000,
           'lower-limit' : 1
       });
@@ -470,10 +470,10 @@
   test("detects limits for non exact roundings", function () {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 7,
-          'range_min' : 2, 
+          'range_min' : 2,
           'range_max' : 10,
-          'cur_min' : 2, 
-          'cur_max' : 10, 
+          'cur_min' : 2,
+          'cur_max' : 10,
           'upper-limit' : 100,
           'lower-limit' : 1
       });
@@ -486,15 +486,15 @@
   test("rounds the position of the slider to the closest integer according to the rounding", function () {
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 100,
-          'range_min' : 0, 
+          'range_min' : 0,
           'range_max' : 1000,
-          'cur_min' : 10, 
+          'cur_min' : 10,
           'cur_max' : 500
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
 
-      $slider.nstSlider('set_position', 150, 400.1); 
+      $slider.nstSlider('set_position', 150, 400.1);
 
       equal($slider.nstSlider('get_current_min_value'), 100);
       equal($slider.nstSlider('get_current_max_value'), 400);
@@ -505,15 +505,15 @@
   test("rounds the position of the slider to the next integer according to the rounding", function () {
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 100,
-          'range_min' : 0, 
+          'range_min' : 0,
           'range_max' : 1000,
-          'cur_min' : 10, 
+          'cur_min' : 10,
           'cur_max' : 500
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
 
-      $slider.nstSlider('set_position', 151, 560); 
+      $slider.nstSlider('set_position', 151, 560);
 
       equal($slider.nstSlider('get_current_min_value'), 200);
       equal($slider.nstSlider('get_current_max_value'), 600);
@@ -524,15 +524,15 @@
   test("rounds the position of the slider to minRange for values close to it", function () {
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 100,
-          'range_min' : 0, 
+          'range_min' : 0,
           'range_max' : 1000,
-          'cur_min' : 10, 
+          'cur_min' : 10,
           'cur_max' : 500
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
 
-      $slider.nstSlider('set_position', 2, 7); 
+      $slider.nstSlider('set_position', 2, 7);
 
       equal($slider.nstSlider('get_current_min_value'), 0);
       equal($slider.nstSlider('get_current_max_value'), 0);
@@ -542,10 +542,10 @@
   test("performs rounding only for values in the middle of the range", function () {
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 10,
-          'range_min' : 3, 
+          'range_min' : 3,
           'range_max' : 37,
-          'cur_min' : 3, 
-          'cur_max' : 3, 
+          'cur_min' : 3,
+          'cur_max' : 3
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
@@ -554,19 +554,19 @@
       equal($slider.nstSlider('get_current_min_value'), 3);
       equal($slider.nstSlider('get_current_max_value'), 3);
 
-      $slider.nstSlider('set_position', 3, 37); 
+      $slider.nstSlider('set_position', 3, 37);
 
       // can select min max
       equal($slider.nstSlider('get_current_min_value'), 3);
       equal($slider.nstSlider('get_current_max_value'), 37);
 
-      $slider.nstSlider('set_position', 10, 30); 
+      $slider.nstSlider('set_position', 10, 30);
 
       // can select a value rounded according to rounding
       equal($slider.nstSlider('get_current_min_value'), 10);
       equal($slider.nstSlider('get_current_max_value'), 30);
 
-      $slider.nstSlider('set_position', 15, 23); 
+      $slider.nstSlider('set_position', 15, 23);
 
       // values are rounded according to rounding regardless odd min/max range
       equal($slider.nstSlider('get_current_min_value'), 10);
@@ -575,15 +575,15 @@
   test ("keeps the handles within the range handles are moved too far apart", function () {
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
           'rounding' : 100,
-          'range_min' : 100, 
+          'range_min' : 100,
           'range_max' : 1000,
-          'cur_min' : 10, 
-          'cur_max' : 500, 
+          'cur_min' : 10,
+          'cur_max' : 500
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
 
-      $slider.nstSlider('set_position', 50, 2000); 
+      $slider.nstSlider('set_position', 50, 2000);
 
       equal($slider.nstSlider('get_current_min_value'), 100);
       equal($slider.nstSlider('get_current_max_value'), 1000);
@@ -591,17 +591,17 @@
   test ("keeps the handles within the limits if they are moved too far apart", function () {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 100,
-          'range_min' : 100, 
+          'range_min' : 100,
           'range_max' : 1000,
-          'cur_min' : 10, 
-          'cur_max' : 500, 
+          'cur_min' : 10,
+          'cur_max' : 500,
           'lower-limit' : 80,
-          'upper-limit' : 1100,
+          'upper-limit' : 1100
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
 
-      $slider.nstSlider('set_position', 50, 2000); 
+      $slider.nstSlider('set_position', 50, 2000);
 
       equal($slider.nstSlider('get_current_min_value'), 80);
       equal($slider.nstSlider('get_current_max_value'), 1100);
@@ -609,12 +609,12 @@
   test ("accepts that grips can cross (i.e., max/min values can swap)", function() {
       var $slider = buildSlider(this.sliders.sliderWithLimitsAndRounding, {
           'rounding' : 100,
-          'range_min' : 100, 
+          'range_min' : 100,
           'range_max' : 1000,
-          'cur_min' : 10, 
-          'cur_max' : 500, 
+          'cur_min' : 10,
+          'cur_max' : 500,
           'lower-limit' : 80,
-          'upper-limit' : 1100,
+          'upper-limit' : 1100
       },{
           right_grip_selector : '.nst-slider-grip-right'
       });
@@ -624,7 +624,7 @@
 
       equal($slider.nstSlider('get_current_min_value'), 80);
       equal($slider.nstSlider('get_current_max_value'), 1100);
-      
+
       // another movement, within the range
       $slider.nstSlider('set_position', 500, 200);
   });
@@ -777,7 +777,7 @@
       var rounding = {
           '1' : '10',  // round with rounding 1 if the value is less than 10
           '10': '50',  // round with rounding 10 if value is less than 99
-          '20': '500', 
+          '20': '500',
           '100' : '1000'
       };
       var $slider = buildSlider(this.sliders.sliderWithRounding, {
