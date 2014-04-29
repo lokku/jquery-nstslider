@@ -4,6 +4,7 @@
   "description": "Fully customizable sliders, Single/Double handles, Touch-enabled, and much more",
   "version": "1.0.1",
   "homepage": "http://lokku.github.io/jquery-nstslider/",
+  "demo": "http://lokku.github.io/jquery-nstslider/",
   "author": {
     "name": "Savio Dimatteo",
     "email": "darksmo@gmail.com",
@@ -15,6 +16,8 @@
     "url": "https://github.com/lokku/jquery-nstslider.git"
   },
   "bugs": "https://github.com/lokku/jquery-nstslider/issues",
+  "docs": "https://github.com/lokku/jquery-nstslider",
+  "download": "http://github.com/lokku/jquery-nstslider/zipball/master/dist",
   "licenses": [
     {
       "type": "MIT",
@@ -22,7 +25,7 @@
     }
   ],
   "dependencies": {
-    "jquery": "*"
+    "jquery": ">=1.6.4"
   },
   "keywords": [
     "ui",

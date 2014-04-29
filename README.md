@@ -70,7 +70,7 @@ $(element).nstSlider('teardown');
 
 #### Dependencies
 
-jQuery 1.7+ (not tested with jQuery 2.0 yet)
+jQuery 1.6.4+
 
 #### License
 

@@ -35,7 +35,14 @@ module.exports = function(grunt) {
       },
     },
     qunit: {
-      files: ['test/**/*.html']
+      files: ['test/**/*.html'],
+      all: {
+          options: {
+              urls: ['1.6.4', '1.7.0', '1.8.0', '1.9.0', '1.11.0', '2.0.0b1', '2.1.1-rc2'].map(function(version) {
+                  return 'http://localhost:<%= connect.server.options.port %>/test/nstSlider.html?jquery=' + version;
+              })
+          }
+      }
     },
     jshint: {
       gruntfile: {
@@ -91,6 +98,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    connect : {
+        server: {
+            options: {
+                port: 8001
+            }
+        }
+    }
   });
 
   // These plugins provide necessary tasks.
@@ -100,9 +114,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
   grunt.registerTask('default', ['less', 'jshint', 'qunit', 'clean', 'concat', 'uglify']);
+
+  // Test task
+  grunt.registerTask('test', ['connect', 'jshint', 'qunit']);
+
 
 };
