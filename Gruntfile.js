@@ -57,6 +57,19 @@ module.exports = function(grunt) {
         src: ['test/**/*.js']
       },
     },
+    less: {
+      development: {
+        options: {
+          compress: true,
+          yuicompress: true,
+          optimization: 2
+        },
+        files: {
+          // target.css file: source.less file
+          "dist/jquery.nstSlider.css" : "src/jquery.nstSlider.less"
+        }
+      }
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -70,6 +83,13 @@ module.exports = function(grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
+      styles: {
+        files: ['src/*.less'],
+        tasks: ['less'],
+        options: {
+          nospawn: true
+        }
+      }
     },
   });
 
@@ -79,9 +99,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('default', ['less', 'jshint', 'qunit', 'clean', 'concat', 'uglify']);
+ 
+  grunt.registerTask('default', ['watch']);
 
 };

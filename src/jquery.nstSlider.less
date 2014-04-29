@@ -1,0 +1,80 @@
+@slider-width: 300px;
+@slider-height: 20px;
+@color-darkblue: #113344;
+@color-white: white;
+@color-orange: #E87722;
+
+// mixins
+
+.has_border_radius (@amount) {
+    -webkit-border-radius: @amount;
+    -moz-border-radius: @amount;
+    border-radius: @amount;
+}
+
+.is_clickable {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.has_transition(@property: all, @duration: 500ms) {
+    -webkit-transition: @property @duration ease-in-out;
+    -moz-transition: @property @duration ease-in-out;
+    -ms-transition: @property @duration ease-in-out;
+    -o-transition: @property @duration ease-in-out;
+    transition: @property @duration ease-in-out;
+}
+
+//
+// slider styles
+//
+
+.nstSlider {
+    .is_clickable;
+    .has_border_radius(10px);
+    position: relative;
+    width: @slider-width;
+    height: @slider-height;
+    background: @color-darkblue;
+
+    .leftGrip.gripHighlighted {
+        background: @color-darkblue;
+    }
+    .rightGrip.gripHighlighted {
+        background: @color-darkblue;
+    }
+
+    .rightGrip,
+    .leftGrip {
+        position: absolute;
+        .has_border_radius(10px);
+        width: @slider-height;
+        height: @slider-height;
+        background: @color-white;
+
+    }
+
+    .bar {
+        .has_border_radius(10px);
+        position: absolute;
+        background: @color-white;
+        height: @slider-height - 12px;
+        top: 6px;
+    }
+
+    .highlightPanel {
+        .has_transition;
+        .has_border_radius(10px);
+        position: absolute;
+        background: @color-orange;
+        height: @slider-height;
+        top: 0;
+    }
+}
+
+// styling these should be really up to you as they live outside this plugin
+.leftLabel  { 
+}
+.rightLabel { 
+}
+
