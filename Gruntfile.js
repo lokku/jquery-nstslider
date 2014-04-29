@@ -6,15 +6,19 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('nstSlider.jquery.json'),
+
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.company %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+
+
     // Task configuration.
     clean: {
       files: ['dist']
     },
+
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -25,6 +29,7 @@ module.exports = function(grunt) {
         dest: 'dist/jquery.<%= pkg.name %>.js'
       }
     },
+
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -34,6 +39,7 @@ module.exports = function(grunt) {
         dest: 'dist/jquery.<%= pkg.name %>.min.js'
       }
     },
+
     qunit: {
       files: ['test/**/*.html'],
       all: {
@@ -44,6 +50,7 @@ module.exports = function(grunt) {
           }
       }
     },
+
     jshint: {
       gruntfile: {
         options: {
@@ -64,6 +71,7 @@ module.exports = function(grunt) {
         src: ['test/**/*.js']
       }
     },
+
     less: {
       development: {
         options: {
@@ -77,6 +85,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -98,6 +107,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     connect : {
         server: {
             options: {
@@ -117,8 +127,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  // Default task.
-  grunt.registerTask('default', ['less', 'jshint', 'qunit', 'clean', 'concat', 'uglify']);
+  // Default task
+  grunt.registerTask('default', 'build:dev');
+
+  // Build dev task
+  grunt.registerTask('build:dev', ['less', 'jshint', 'qunit', 'clean', 'concat', 'uglify']);
 
   // Test task
   grunt.registerTask('test', ['connect', 'jshint', 'qunit']);
