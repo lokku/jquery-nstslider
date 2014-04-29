@@ -2,10 +2,11 @@
   "name": "nstSlider",
   "version": "1.0.1",
   "main": [
-    "./jquery.nstSlider.js"
+    "./dist/jquery.nstSlider.js"
   ],
   "ignore": [
     ".jshintrc",
+    ".gitignore",
     "**/*.txt",
     "**/.*",
     "node_modules",
@@ -16,7 +17,7 @@
   "dependencies": {
     "jquery": "latest"
   },
-  "homepage": "https://github.com/lokku/jquery-nstslider",
+  "homepage": "http://lokku.github.io/jquery-nstslider/"
   "authors": [
     "Savio Dimatteo <darksmo@gmail.com>"
   ],
@@ -26,6 +27,5 @@
     "slider",
     "nestoria"
   ],
-  "license": "MIT",
-  "private": true
+  "license": "MIT"
 }
