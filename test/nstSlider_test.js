@@ -23,10 +23,7 @@
   /*
    * some helpers...
    */
-  var elementHasBoundEvent = function ($element, eventName) {
-      return $._data($element[0], 'events').hasOwnProperty(eventName);
-  },
-  getBoundEventList = function ($element) {
+  var getBoundEventList = function ($element) {
       var allBoundEvents = $._data($element[0], 'events');
       var list = [];
 
@@ -80,7 +77,7 @@
       }
 
       return $sliderDom.nstSlider(options);
-  }
+  };
 
   var _initialEventsBoundToDocument = getBoundEventList($(document));
   var _initialNumberOfEventsBoundToDocument = _initialEventsBoundToDocument.length;
@@ -117,18 +114,19 @@
 
                 $slider.nstSlider('teardown');
 
+                var totalAttr = 0;
+                var totalData = 0;
+
                 var gotData = $slider.data();
                 if (typeof gotData !== 'undefined') {
                     // check that all existing data after the teardown are the one
                     // specified in the markup
-                    var totalAttr = 0;
-                    var totalData = 0;
                     for (var k in gotData) {
                         if (gotData.hasOwnProperty(k)) {
                             totalData++;
                             if (typeof $slider.attr('data-' + k) !== 'undefined') {
                                 // check the value is the same
-                                if (gotData[k] == $slider.attr('data-' + k)) {
+                                if ("" + gotData[k] === $slider.attr('data-' + k)) {
                                     totalAttr++;
                                 }
                                 else {
@@ -197,11 +195,12 @@
 
       // throw an exception until all parameters are set
       var total = required_attributes.length;
+      var mayThrowErrorFunc = function () { 
+          $(sliderThatThrowsErrors).nstSlider();
+      };
       for (var i=0; i<total; i++) {
 
-          throws(function () { 
-              $(sliderThatThrowsErrors).nstSlider();
-          }, /data-/, 'throws a data- related exception ' + (i+1) + '/' + (total));
+          throws(mayThrowErrorFunc, /data-/, 'throws a data- related exception ' + (i+1) + '/' + (total));
 
           // add a parameter
           var req_attr = required_attributes[i];
@@ -257,8 +256,6 @@
 
 
   test('event binding is performed correctly', function () {
-    var that = this;
-
     // initially no events are bound to the document
     var $document = $(document);
     var boundEventList = getBoundEventList($document);
@@ -272,7 +269,7 @@
     }
 
     // if a slider is created, then the events get bound to the document
-    var $slider = this.sliders.basicSliderWithParameters.nstSlider();
+    this.sliders.basicSliderWithParameters.nstSlider();
 
     equal(getBoundEventList($document).length, 2, 'some events are bound to the document');
 
@@ -645,7 +642,7 @@
       var expectCause = 'init';
 
       $slider.nstSlider({
-          value_changed_callback : function (cause, minV, maxV) {
+          value_changed_callback : function (cause/*, minV, maxV */) {
               equal(cause, expectCause, "Got expected cause " + cause + " in value_changed_callback");
           }
       });
@@ -673,10 +670,6 @@
 
       checkInitialState();
 
-      // now the max constrain should be detected properly from within the
-      // callback only
-      expectMinConstrain = true;
-
       $slider.nstSlider('set_range', 700, 800);
 
       equal($slider.nstSlider('get_range_min'), 700);
@@ -697,7 +690,7 @@
       });
 
       $slider.nstSlider({
-          value_changed_callback : function (cause, vMin, vMax) {
+          value_changed_callback : function (cause/* , vMin, vMax */) {
              equal(cause, expectCause, "Got expected cause " + cause + " in value_changed_callback");
           }
       });
@@ -721,7 +714,7 @@
       });
 
       $slider.nstSlider({
-          value_changed_callback : function (cause, vMin, vMax) {
+          value_changed_callback : function (cause/*, vMin, vMax*/) {
              equal(cause, expectCause, "Got expected cause " + cause + " in value_changed_callback");
           }
       });
@@ -733,9 +726,6 @@
       equal($slider.nstSlider('get_current_max_value'), 1395);
 
       // now prepare for next interaction in which we reduce the range...
-
-      // ... and we expect values constraints to be detected
-      expectMinMaxConstrain = true;
 
       expectCause = 'set_range';
 
