@@ -5,6 +5,8 @@ jquery.nstSlider.js
 
 Fully customizable with CSS, Single/Double handles, Touch-enabled, IE 7+ Compatibility, Custom Digit Rounding, Non linear step increments!
 
+[![Build Status](https://travis-ci.org/lokku/jquery-nstslider.svg?branch=master)](https://travis-ci.org/lokku/jquery-nstslider)
+
 #### Example
 
 Initialize with:
