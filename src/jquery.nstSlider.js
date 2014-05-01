@@ -16,6 +16,45 @@
 
     var _methods = {
          /*
+          * Return the width in pixels of the slider bar, i.e., the maximum
+          * number of pixels the user can slide the slider over. This function
+          * should always be used internally to obtain the width of the
+          * slider in pixels!
+          */
+         'getSliderWidthPx' : function () {
+            var $this = this;
+
+            //
+            // .width() can actually return a floating point number! see
+            // jquery docs!
+            //
+            return Math.round($this.width());
+         },
+         /*
+          * Return the width of the left grip.  Like getSliderWidthPx, this
+          * method deals with .width() returning a floating point number. All
+          * the code in this plugin assumes an integer here!
+          */
+         'getLeftGripWidth' : function () {
+            var $this = this,
+                settings = $this.data('settings'),
+                $leftGrip = $this.find(settings.left_grip_selector);
+
+            return Math.round($leftGrip.width());
+         },
+         /*
+          * Return the width of the right grip. The calling method should
+          * check that the right grip actually exists. This method assumes it
+          * does.
+          */
+         'getRightGripWidth' : function () {
+            var $this = this,
+                settings = $this.data('settings'),
+                $rightGrip = $this.find(settings.right_grip_selector);
+
+            return Math.round($rightGrip.width());
+         },
+         /*
           * Perform binary search to find searchElement into a generic array.
           * It uses a customized compareFunc to perform the comparison between
           * two elements of the array and a getElement function to pick the
@@ -164,7 +203,7 @@
             }
             else {
                 // ... use a linear mapping otherwise.
-                var w = $this.width() - $this.data('left_grip_width');
+                var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
                 leftPx = _methods.rangemap_0_to_n.call($this, cur_min, w);
                 rightPx = _methods.rangemap_0_to_n.call($this, cur_max, w);
             }
@@ -201,7 +240,7 @@
                 rightPxInValue = pixel_to_value_mapping_func(rightPx);
             }
             else {
-                var w = $this.width() - $this.data('left_grip_width');
+                var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
                 leftPxInValue = _methods.inverse_rangemap_0_to_n.call($this, leftPx, w);
                 rightPxInValue = _methods.inverse_rangemap_0_to_n.call($this, rightPx, w);
             }
@@ -264,7 +303,7 @@
             var curY = touch.pageY,
                 curX = touch.pageX;
 
-            // is the user allowed to grab if he/she tapped to far from the
+            // is the user allowed to grab if he/she tapped too far from the
             // actual value bar?
             var $bar = $this.find(settings.value_bar_selector),
                 ydelta = Math.abs($bar.offset().top - curY),
@@ -323,7 +362,7 @@
             _$current_slider = $this;
 
             var leftGripPositionPx = parseInt($leftGrip.css('left').replace('px',''), 10),
-                sliderWidthPx = $this.width() - $this.data('left_grip_width'),
+                sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
                 lleft = $leftGrip.offset().left,
                 rleft, // don't compute this yet (mayme not needed if 1 grip)
                 curX,
@@ -450,7 +489,7 @@
                 // our slider element.
                 var $this = _$current_slider,
                     settings = $this.data('settings'),
-                    sliderWidthPx = $this.width() - $this.data('left_grip_width'),
+                    sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
                     $leftGrip = $this.find(settings.left_grip_selector),
                     $rightGrip = $this.find(settings.right_grip_selector),
                     leftGripPositionPx = parseInt($leftGrip.css('left').replace('px',''), 10);
@@ -979,12 +1018,10 @@
                 $this.data('has_right_grip', has_right_grip);
 
                 // determine size of grips
-                var left_grip_width = $left_grip.width(),
-                    right_grip_width = left_grip_width;
+                var left_grip_width = _methods.getLeftGripWidth.call($this),
+                    right_grip_width = has_right_grip ? 
+                        _methods.getRightGripWidth.call($this) : left_grip_width;
 
-                if (has_right_grip === true) {
-                    right_grip_width = $right_grip.width();
-                }
                 $this.data('left_grip_width', left_grip_width);
                 $this.data('right_grip_width', right_grip_width);
 
@@ -1207,7 +1244,7 @@
                 _methods.unset_step_histogram.call($this);
             }
 
-            var sliderWidthPx = $this.width() - $this.data('left_grip_width'),
+            var sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
                 nbuckets = histogram.length;
 
             if (sliderWidthPx <= 0) {
@@ -1412,7 +1449,7 @@
             if (!rangeMax) { rangeMax = 0; }
 
             // we need to map rangeMin and rangeMax into pixels.
-            var sliderWidth =  $this.width(),
+            var sliderWidth =  _methods.getSliderWidthPx.call($this),
             leftPx = _methods.rangemap_0_to_n.call($this, rangeMin, sliderWidth),
             rightPx = _methods.rangemap_0_to_n.call($this, rangeMax, sliderWidth),
             barWidth = rightPx - leftPx;

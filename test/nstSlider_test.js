@@ -85,6 +85,11 @@
   module('jQuery#nstSlider', {
     // This will run before each test in this module.
     setup: function() {
+      // save original implementation of jquery
+      this.originalFn = {
+         'width' : $.fn.width
+         // add more here as they become needed...
+      };
       this.sliders = {
           manyBasicSliders : $('#manyBasicSliders').children(),
           basicSliderWithParameters : $('#basicSliderWithParameters'),
@@ -93,11 +98,21 @@
           basicSliderWithParametersAndNonDefaultRightGrip : $('#basicSliderWithParametersAndNonDefaultRightGrip'),
           basicSliderWithCrossingLimits : $('#basicSliderWithCrossingLimits'),
           sliderWithRounding : $('#sliderWithRounding'),
-          sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding')
+          sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
+          sliderWithBar : $('#sliderWithBar')
       };
     },
     // This will run after each test in this module.
     teardown : function () {
+      //
+      // restore original implementations of jQuery that may have been
+      // overridden in the tests
+      //
+      for (var impl in this.originalFn) {
+        if (this.originalFn.hasOwnProperty(impl)) {
+            $.fn[impl] = this.originalFn[impl];
+        }
+      }
 
       // tear down all plugins initialized on the various elements
 
@@ -802,6 +817,44 @@
       equal($slider.nstSlider('round_value_according_to_rounding', 300), 300);
       equal($slider.nstSlider('round_value_according_to_rounding', 923), 900);
       equal($slider.nstSlider('round_value_according_to_rounding', 4436), 4400);
+  });
+
+  test("Can set histogram when the slider with is not integer", function () {
+      var that = this;
+      var $sliderWithBar = $(this.sliders.sliderWithBar);
+      
+      //
+      // we want to test what happens when this method returns floating point
+      // values. Hence we mock.
+      //
+      $.fn.width = function () {
+          var $this = this;
+          if      ($this.hasClass('left') ) { return 34.33;   }
+          else if ($this.hasClass('right')) { return 34.33;   }
+          else if ($this.attr('id') === 'sliderWithBar') { return 123.343; }
+          else {
+
+              // fall back on the original method
+              that.originalFn.width.apply($this, arguments);
+          }
+      };
+      
+      // initialize...
+      $sliderWithBar.nstSlider({
+           'left_grip_selector' : '.left',
+           'right_grip_selector' : '.right',
+           'value_bar_selector' : '.bar'
+      });
+
+      // make sure we get a floating point width when we access the slider
+      equal($sliderWithBar.width(), 123.343, 'Slider has a floating point width');
+      equal($sliderWithBar.find('.left').width(), 34.33, 'Slider left grip has a floating point width');
+      equal($sliderWithBar.find('.right').width(), 34.33, 'Slider left grip has a floating point width');
+
+      ok($sliderWithBar.nstSlider('set_step_histogram', [ 
+          1, 1, 2, 40, 128, 200, 10, 5, 1, 1
+      ]), 'step histogram is set');
+
   });
 
 }(jQuery));
