@@ -4,7 +4,7 @@
     paths: {
       jquery: 'vendor/jquery/jquery',
       prettify: 'vendor/google-code-prettify/prettify',
-      nstSlider: 'vendor/nestoria/jquery.nstSlider',
+      nstSlider: 'vendor/jquery-nstSlider/jquery.nstSlider',
       jsbeautify: 'vendor/js-beautify/beautify',
       dotimeout: 'vendor/ba-dotimeout/jquery.ba-dotimeout.min',
       scrollTo: 'vendor/jquery.scrollTo/jquery.scrollTo'

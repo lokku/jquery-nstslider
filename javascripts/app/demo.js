@@ -2,7 +2,7 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
 
     function($, nstSlider, templates, js_beautify, prettyPrint) {
         var arrayToString = function (a) {
-            return js_beautify(a.join(''));
+            return js_beautify.js_beautify(a.join(''));
         };
 
         var objectToString = function (o) {
@@ -26,7 +26,7 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                 }
             }
 
-            return js_beautify('{' + str.join(',') + '}');
+            return js_beautify.js_beautify('{' + str.join(',') + '}');
         };
 
         var DemoView = (function() {
@@ -53,6 +53,48 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                       'right_grip_selector' : '.rightGrip',
                       'value_bar_selector' : '.bar',
                       'value_changed_callback' : function (cause, leftValue, rightValue) {
+                          $(this).parent().find('.leftLabel').text(leftValue);
+                          $(this).parent().find('.rightLabel').text(rightValue);
+                      }
+                  })
+              }));
+
+              //
+              // ARIA-enabled
+              //
+
+              markup = templates.accessibleSlider();
+
+              $(element).append(templates.demoSection({
+                  id: 'accessible_slider',
+                  title: 'Aria-Enabled',
+                  markup: markup,
+                  markup_escaped: markup.replace(/</g,'&lt;').replace(/>/g, '&gt;'),
+                  description: 'You can enable ARIA by setting the <code>data-aria_enabled="true"</code> attribute in the grips HTML. Aria- attributes will be set as the slider handles are dragged!',
+                  pluginClass: 'slider',
+                  pluginName: 'nstSlider',
+                  pluginOptions: objectToString({
+                      'left_grip_selector' : '.leftGrip',
+                      'right_grip_selector' : '.rightGrip',
+                      'value_bar_selector' : '.bar',
+                      'value_changed_callback' : function (cause, leftValue, rightValue, prevLeft, prevRight) {
+                          var $grip = $(this).find('.leftGrip'),
+                            whichGrip = 'left grip';
+                            
+                          if (leftValue === prevLeft) {
+                              $grip = $(this).find('.rightGrip');
+                              whichGrip = 'right grip';
+                          }
+                          var text = [];
+                          text.push('<b>Moving ' + whichGrip + '</b>');
+                          text.push('role: ' + $grip.attr('role'));
+                          text.push('aria-valuemin: ' + $grip.attr('aria-valuemin'));
+                          text.push('aria-valuenow: ' + $grip.attr('aria-valuenow'));
+                          text.push('aria-valuemax: ' + $grip.attr('aria-valuemax'));
+                          text.push('aria-disabled' + $grip.attr('aria-disabled'));
+
+                          $('.ariaAttributesAsText').html(text.join('<br />'));
+
                           $(this).parent().find('.leftLabel').text(leftValue);
                           $(this).parent().find('.rightLabel').text(rightValue);
                       }
@@ -190,7 +232,6 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                       "});"
                   ])
               }));
-
 
               prettyPrint.prettyPrint();
           };
