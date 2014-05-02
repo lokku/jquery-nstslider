@@ -1177,9 +1177,14 @@
                 // enable aria attributes update?
                 if ($this.data('aria_enabled') === true) {
                     // setup aria role attributes on each grip
-                    $left_grip.attr('role', 'slider');
+                    $left_grip
+                        .attr('role', 'slider')
+                        .attr('aria-disabled', 'false');
+
                     if (has_right_grip) {
-                        $right_grip.attr('role', 'slider');
+                        $right_grip
+                            .attr('role', 'slider')
+                            .attr('aria-disabled', 'false');
                     }
                 }
 
@@ -1187,120 +1192,124 @@
                 // deal with keypresses here
                 //
                 $this.bind('keyup.nstSlider', function (e) {
-                    switch (e.which) {
-                        case 37:   // left
-                        case 38:   // up
-                        case 39:   // right 
-                        case 40:   // down
-
-                        if (_before_keydown_value === _before_keyup_value) {
-
-                            // we should search for the next value change...
-                            // ... in which direction? depends on whe
-
-                            var searchUntil = _methods.getSliderWidthPx.call($this),
-                                val,
-                                i,
-                                setAtPixel;
-
-                            if (_before_keydown_pixel - _before_keyup_pixel < 0) {
-                                // the grip was moved towards the right
-
-                                for (i=_before_keyup_pixel; i<=searchUntil; i++) {
-                                    // if the value at pixel i is different than
-                                    // the current value then we are good to go.
-                                    //
-                                    val = methods.round_value_according_to_rounding.call($this,
-                                        _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
-                                    );
-                                    if (val !== _before_keyup_value) {
-                                        setAtPixel = i;
-                                        break;
-                                    }
-                                }
-                            }
-                            else {
-                                // the grip was moved towards the left
-
-                                for (i=_before_keyup_pixel; i>=0; i--) {
-
-                                    // if the value at pixel i is different than
-                                    // the current value then we are good to go.
-                                    //
-                                    val = methods.round_value_according_to_rounding.call($this,
-                                        _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
-                                    );
-                                    if (val !== _before_keyup_value) {
-                                       setAtPixel = i;
-                                       break;
-                                    }
-                                }
-                            }
-
-
-                            // we need to set the slider at this position
-                            if (_is_left_grip) {
-                                _methods.validateAndMoveGripsToPx.call($this, setAtPixel, _methods.getRightGripPositionPx.call($this));
-                            }
-                            else {
-                                _methods.validateAndMoveGripsToPx.call($this, _methods.getLeftGripPositionPx.call($this), setAtPixel);
-                            }
-
-                        }
-                    }
-
-                    // clear values 
-                    _before_keydown_value = undefined;
-                    _before_keydown_pixel = undefined;
-                    _before_keyup_value = undefined;
-                    _before_keyup_pixel = undefined;
-                });
-                $this.bind('keydown.nstSlider', function (evt) {
-
-                    var moveHandleBasedOnKeysFunc = function ($grip, e) {
-
-                        var nextLeft = _methods.getLeftGripPositionPx.call($this),
-                            nextRight = _methods.getRightGripPositionPx.call($this);
-
-                        if (typeof _before_keydown_value === 'undefined') {
-                            _before_keydown_pixel = _is_left_grip ? nextLeft : nextRight;
-
-                            _before_keydown_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
-                        }
-
+                    if ($this.data('enabled')) {
                         switch (e.which) {
                             case 37:   // left
                             case 38:   // up
-                                if (_is_left_grip) { nextLeft--; } else { nextRight--; }
-                                e.preventDefault();
-                                break;
-
                             case 39:   // right 
                             case 40:   // down
-                                if (_is_left_grip) { nextLeft++; } else { nextRight++; }
 
-                                e.preventDefault();
-                                break;
+                            if (_before_keydown_value === _before_keyup_value) {
+
+                                // we should search for the next value change...
+                                // ... in which direction? depends on whe
+
+                                var searchUntil = _methods.getSliderWidthPx.call($this),
+                                    val,
+                                    i,
+                                    setAtPixel;
+
+                                if (_before_keydown_pixel - _before_keyup_pixel < 0) {
+                                    // the grip was moved towards the right
+
+                                    for (i=_before_keyup_pixel; i<=searchUntil; i++) {
+                                        // if the value at pixel i is different than
+                                        // the current value then we are good to go.
+                                        //
+                                        val = methods.round_value_according_to_rounding.call($this,
+                                            _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
+                                        );
+                                        if (val !== _before_keyup_value) {
+                                            setAtPixel = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else {
+                                    // the grip was moved towards the left
+
+                                    for (i=_before_keyup_pixel; i>=0; i--) {
+
+                                        // if the value at pixel i is different than
+                                        // the current value then we are good to go.
+                                        //
+                                        val = methods.round_value_according_to_rounding.call($this,
+                                            _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
+                                        );
+                                        if (val !== _before_keyup_value) {
+                                           setAtPixel = i;
+                                           break;
+                                        }
+                                    }
+                                }
+
+
+                                // we need to set the slider at this position
+                                if (_is_left_grip) {
+                                    _methods.validateAndMoveGripsToPx.call($this, setAtPixel, _methods.getRightGripPositionPx.call($this));
+                                }
+                                else {
+                                    _methods.validateAndMoveGripsToPx.call($this, _methods.getLeftGripPositionPx.call($this), setAtPixel);
+                                }
+
+                            }
                         }
 
-                        _before_keyup_pixel = _is_left_grip ?  nextLeft : nextRight;
-
-                        // may write into cur_min, cur_max data...
-                        _methods.validateAndMoveGripsToPx.call($this, nextLeft, 
-                            nextRight);
-
-                        _before_keyup_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
-                    };
-                    
-                    // default
-                    if (has_right_grip && $this.find(':focus').is($right_grip)) {
-                        _is_left_grip = false;
-                        moveHandleBasedOnKeysFunc.call($this, $right_grip, evt);
+                        // clear values 
+                        _before_keydown_value = undefined;
+                        _before_keydown_pixel = undefined;
+                        _before_keyup_value = undefined;
+                        _before_keyup_pixel = undefined;
                     }
-                    else {
-                        _is_left_grip = true;
-                        moveHandleBasedOnKeysFunc.call($this, $left_grip, evt);
-                    }
+                });
+                $this.bind('keydown.nstSlider', function (evt) {
+                    if ($this.data('enabled')) {
+
+                        var moveHandleBasedOnKeysFunc = function ($grip, e) {
+
+                            var nextLeft = _methods.getLeftGripPositionPx.call($this),
+                                nextRight = _methods.getRightGripPositionPx.call($this);
+
+                            if (typeof _before_keydown_value === 'undefined') {
+                                _before_keydown_pixel = _is_left_grip ? nextLeft : nextRight;
+
+                                _before_keydown_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
+                            }
+
+                            switch (e.which) {
+                                case 37:   // left
+                                case 38:   // up
+                                    if (_is_left_grip) { nextLeft--; } else { nextRight--; }
+                                    e.preventDefault();
+                                    break;
+
+                                case 39:   // right 
+                                case 40:   // down
+                                    if (_is_left_grip) { nextLeft++; } else { nextRight++; }
+
+                                    e.preventDefault();
+                                    break;
+                            }
+
+                            _before_keyup_pixel = _is_left_grip ?  nextLeft : nextRight;
+
+                            // may write into cur_min, cur_max data...
+                            _methods.validateAndMoveGripsToPx.call($this, nextLeft, 
+                                nextRight);
+
+                            _before_keyup_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
+                        };
+                        
+                        // default
+                        if (has_right_grip && $this.find(':focus').is($right_grip)) {
+                            _is_left_grip = false;
+                            moveHandleBasedOnKeysFunc.call($this, $right_grip, evt);
+                        }
+                        else {
+                            _is_left_grip = true;
+                            moveHandleBasedOnKeysFunc.call($this, $left_grip, evt);
+                        }
+                    } 
                 });
 
                 // determine size of grips
@@ -1471,13 +1480,29 @@
             return $this;
         },
         'disable' : function () {
-            var $this = this;
-            $this.data('enabled', false);
+            var $this = this,
+                settings = $this.data('settings');
+
+            $this.data('enabled', false)
+                .find(settings.left_grip_selector)
+                    .attr('aria-disabled', 'true')
+                .end()
+                .find(settings.right_grip_selector)
+                    .attr('aria-disabled', 'true');
+
             return $this;
         },
         'enable' : function() {
-            var $this = this;
-            $this.data('enabled', true);
+            var $this = this,
+                settings = $this.data('settings');
+
+            $this.data('enabled', true)
+                .find(settings.left_grip_selector)
+                    .attr('aria-disabled', 'false')
+                .end()
+                .find(settings.right_grip_selector)
+                    .attr('aria-disabled', 'false');
+
             return $this;
         },
         'is_enabled' : function() {

@@ -99,7 +99,8 @@
           basicSliderWithCrossingLimits : $('#basicSliderWithCrossingLimits'),
           sliderWithRounding : $('#sliderWithRounding'),
           sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
-          sliderWithBar : $('#sliderWithBar')
+          sliderWithBar : $('#sliderWithBar'),
+          accessibleSlider : $('#accessibleSlider')
       };
     },
     // This will run after each test in this module.
@@ -857,4 +858,29 @@
 
   });
 
+  test("aria attributes are set correctly when slider is disabled", function () {
+
+        var $accessibleSlider = $(this.sliders.accessibleSlider).nstSlider({
+             'left_grip_selector' : '.left',
+             'right_grip_selector' : '.right',
+             'value_bar_selector' : '.bar'
+        });
+
+        // slider is initially enabled
+        equal($accessibleSlider.nstSlider('is_enabled'), true, 'slider is enabled initially');
+        equal($accessibleSlider.find('.left').attr('aria-disabled'), 'false', 'aria-disabled is false on left grip');
+        equal($accessibleSlider.find('.right').attr('aria-disabled'), 'false', 'aria-disabled is false on right grip');
+
+        // slider is disabled
+        $accessibleSlider.nstSlider('disable');
+        equal($accessibleSlider.nstSlider('is_enabled'), false, 'slider is disabled');
+        equal($accessibleSlider.find('.left').attr('aria-disabled'), 'true', 'aria-disabled is true on left grip');
+        equal($accessibleSlider.find('.right').attr('aria-disabled'), 'true', 'aria-disabled is true on right grip');
+
+        // re-enable now...
+        $accessibleSlider.nstSlider('enable');
+        equal($accessibleSlider.nstSlider('is_enabled'), true, 'slider is re-enabled');
+        equal($accessibleSlider.find('.left').attr('aria-disabled'), 'false', 'aria-disabled is false on left grip after enable is called');
+        equal($accessibleSlider.find('.right').attr('aria-disabled'), 'false', 'aria-disabled is false on right grip after enable is called');
+  });
 }(jQuery));
