@@ -1,3 +1,10 @@
 
+v1.0.2 Fri May  2 23:43:19 BST 2014
+    * added keyboard support
+    * aria attributes for accessibility
+    * fixed infinite loop bug on set_histogram_step call
+    * fixed right single handle going through the slider
+    * highlight bar can now be clicked and handles will be moved
+
 v1.0.1 Fri Apr 25 02:31:33 CEST 2014
     * first release

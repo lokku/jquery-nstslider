@@ -1,6 +1,6 @@
 {
   "name": "nstSlider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": [
     "./dist/jquery.nstSlider.js"
   ],
@@ -24,6 +24,7 @@
   "description": "Nestoria Slider jQuery Plugin",
   "keywords": [
     "ui",
+    "range",
     "slider",
     "values",
     "select",
