@@ -8,13 +8,121 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 (function($) {
+    /* 
+     * These are used for user interaction. This plugin assumes the user can
+     * interact with one control at a time. For this reason it's safe to keep
+     * these global.
+     */
     var _$current_slider;
     var _is_mousedown;
     var _original_mousex;
     var _user_mouseup_callback;
+
+    // both for keyboard and mouse interaction
     var _is_left_grip;
 
+    // for keyboard interaction only
+    var _before_keydown_value;
+    var _before_keydown_pixel;
+    var _before_keyup_value;
+    var _before_keyup_pixel;
+
     var _methods = {
+         'getSliderValuesAtPositionPx' : function (leftPx, rightPx) {
+              var $this = this,
+                  leftPxInValue, rightPxInValue,
+                  pixel_to_value_mapping_func = $this.data('pixel_to_value_mapping');
+
+              if (typeof pixel_to_value_mapping_func !== 'undefined') {
+                  leftPxInValue = pixel_to_value_mapping_func(leftPx);
+                  rightPxInValue = pixel_to_value_mapping_func(rightPx);
+              }
+              else {
+                  var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
+                  leftPxInValue = _methods.inverse_rangemap_0_to_n.call($this, leftPx, w);
+                  rightPxInValue = _methods.inverse_rangemap_0_to_n.call($this, rightPx, w);
+              }
+
+              return [leftPxInValue, rightPxInValue];
+         },
+         /*
+          *  Move slider grips to the specified position. This method is
+          *  designed to run within the user interaction lifecycle. Only call
+          *  this method if the user has interacted with the sliders
+          *  actually...
+          *
+          *  First the desired positions are validated. If values are ok, the
+          *  move is performed, otherwise it's just ignored because weird
+          *  values have been passed.
+          */
+         'validateAndMoveGripsToPx' : function (nextLeftGripPositionPx, nextRightGripPositionPx) {
+             var $this = this;
+             var draggableAreaLengthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
+
+             //
+             // Validate & Move
+             //
+             if (nextRightGripPositionPx <= draggableAreaLengthPx && 
+                 nextLeftGripPositionPx >= 0 &&
+                 nextLeftGripPositionPx <= draggableAreaLengthPx && 
+                 (!$this.data('has_right_grip') || nextLeftGripPositionPx <= nextRightGripPositionPx) ) {
+
+                 var prevMin = $this.data('cur_min'),                        
+                     prevMax = $this.data('cur_max');       
+
+                 // note: also stores new cur_min, cur_max
+                 _methods.set_position_from_px.call($this, nextLeftGripPositionPx, nextRightGripPositionPx);
+
+                 // set the style of the grips according to the highlighted range
+                 _methods.refresh_grips_style.call($this);
+
+                 _methods.notify_changed_implicit.call($this, 'drag_move', prevMin, prevMax);
+             }
+
+             return $this;
+         },
+         /*
+          * Update aria attributes of the slider based on the current
+          * configuration of the slider.
+          */
+         'updateAriaAttributes' : function () {
+            var $this = this,
+                settings = $this.data('settings'),
+                $leftGrip = $this.find(settings.left_grip_selector);
+
+            //
+            // double grips sliders is probably the most common case...
+            // ... also, the values to be set in the two cases are quite
+            // different.
+            //
+            if ($this.data('has_right_grip')) {
+
+                var $rightGrip = $this.find(settings.right_grip_selector);
+
+                //
+                // grips are mutually binding their max/min values when 2 grips
+                // are present. For example, we should imagine the left grip as
+                // being constrained between [ rangeMin, valueMax ]
+                //
+                $leftGrip
+                    .attr('aria-valuemin', $this.data('range_min'))
+                    .attr('aria-valuenow', methods.get_current_min_value.call($this))
+                    .attr('aria-valuemax', methods.get_current_max_value.call($this));
+
+                $rightGrip
+                    .attr('aria-valuemin', methods.get_current_min_value.call($this))
+                    .attr('aria-valuenow', methods.get_current_max_value.call($this))
+                    .attr('aria-valuemax', $this.data('range_max'));
+            }
+            else {
+                $leftGrip
+                    .attr('aria-valuemin', $this.data('range_min'))
+                    .attr('aria-valuenow', methods.get_current_min_value.call($this))
+                    .attr('aria-valuemax', $this.data('range_max'));
+            }
+
+            return $this;
+         },
          /*
           * Return the width in pixels of the slider bar, i.e., the maximum
           * number of pixels the user can slide the slider over. This function
@@ -29,6 +137,53 @@
             // jquery docs!
             //
             return Math.round($this.width());
+         },
+         /*
+          * Return the position of a given grip in pixel in integer format.
+          * Use this method internally if you are literally going to get the
+          * left CSS property from the provided grip.
+          *
+          * This method assumes a certain grip exists and will have the left
+          * property.
+          *
+          * This is generally safe for the left grip, because it is basically
+          * guaranteed to exist. But for the right grip you should be really
+          * using getRightGripPositionPx instead.
+          *
+          */
+         'getGripPositionPx' : function ($grip) {
+            return parseInt($grip.css('left').replace('px',''), 10);
+         },
+         /*
+          * Just the same as getGripPositionPx, but there is no need to provide
+          * the $slider.
+          */
+         'getLeftGripPositionPx' : function () {
+            var $this = this,
+                settings = $this.data('settings'),
+                $leftGrip = $this.find(settings.left_grip_selector);
+
+            return _methods.getGripPositionPx.call($this, $leftGrip);
+         },
+         /*
+          * Return the position of the right Grip if it exists or return the
+          * current position if not. Even if the right grip doesn't exist, its
+          * position should be defined, as it determines the position of the 
+          * bar.
+          */
+         'getRightGripPositionPx' : function () {
+            var $this = this,
+                settings = $this.data('settings');
+
+                if ($this.data('has_right_grip')) {
+                    return _methods.getGripPositionPx.call($this,
+                        $this.find(settings.right_grip_selector)
+                    );
+                }
+
+                // default
+                var sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
+                return _methods.rangemap_0_to_n.call($this, $this.data('cur_max'), sliderWidthPx);
          },
          /*
           * Return the width of the left grip.  Like getSliderWidthPx, this
@@ -233,17 +388,9 @@
             // now set the position as requested...
             _methods.set_handles_at_px.call($this, leftPx, rightPx);
 
-            var leftPxInValue, rightPxInValue;
-            var pixel_to_value_mapping_func = $this.data('pixel_to_value_mapping');
-            if (typeof pixel_to_value_mapping_func !== 'undefined') {
-                leftPxInValue = pixel_to_value_mapping_func(leftPx);
-                rightPxInValue = pixel_to_value_mapping_func(rightPx);
-            }
-            else {
-                var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
-                leftPxInValue = _methods.inverse_rangemap_0_to_n.call($this, leftPx, w);
-                rightPxInValue = _methods.inverse_rangemap_0_to_n.call($this, rightPx, w);
-            }
+            var valueLeftRight = _methods.getSliderValuesAtPositionPx.call($this, leftPx, rightPx),
+                leftPxInValue = valueLeftRight[0],
+                rightPxInValue = valueLeftRight[1];
 
             // ... and save the one we've found.
             $this.data('cur_min', leftPxInValue);
@@ -345,10 +492,19 @@
             // left grip, right grip, bar/panel elements.
             //
             var $target = $(e.target);
+
+            // ... if the highlight range was enabled we should check wether
+            // the user has tapped or clicked the highlight panel...
+            var targetIsPanelSelector = false;
+            if (typeof settings.highlight === 'object') {
+                targetIsPanelSelector = $target.is(settings.highlight.panel_selector);
+            }
+
             if (is_touch === false && 
                 !$target.is(settings.left_grip_selector) &&
                 !$target.is(settings.right_grip_selector) && 
                 !$target.is(settings.value_bar_selector) &&
+                !targetIsPanelSelector &&
                 !$target.is($this) ) {
 
                 return;
@@ -361,23 +517,17 @@
             
             _$current_slider = $this;
 
-            var leftGripPositionPx = parseInt($leftGrip.css('left').replace('px',''), 10),
+            var leftGripPositionPx = _methods.getGripPositionPx.call($this, $leftGrip),
                 sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
                 lleft = $leftGrip.offset().left,
-                rleft, // don't compute this yet (mayme not needed if 1 grip)
+                rleft, // don't compute this yet (maybe not needed if 1 grip)
                 curX,
                 ldist,
                 rdist,
                 ldelta,
                 rdelta;
 
-            var rightGripPositionPx;
-            if ($this.data('has_right_grip')) {
-                rightGripPositionPx = parseInt($rightGrip.css('left').replace('px',''), 10);
-            }
-            else {
-                rightGripPositionPx = _methods.rangemap_0_to_n.call($this, $this.data('cur_max'), sliderWidthPx);
-            }
+            var rightGripPositionPx = _methods.getRightGripPositionPx.call($this);
 
             //
             // We need to do as if the click happened a bit more on the left.
@@ -454,8 +604,22 @@
             //
             // Hence we limit.
             //
-            if (rightGripPositionPx > sliderWidthPx) {
-                rightGripPositionPx = sliderWidthPx;
+
+            if ($this.data('has_right_grip')) {
+                // here we check the right handle only, because it should
+                // always be the one that gets moved if the user clicks towards
+                // the right extremity!
+                if (rightGripPositionPx > sliderWidthPx) {
+                    rightGripPositionPx = sliderWidthPx;
+                }
+            }
+            else {
+                // in case we have one handle only, we will be moving the left
+                // handle instead of the right one... hence we need to perform
+                // this check on the left handle as well!
+                if (leftGripPositionPx > sliderWidthPx) {
+                    leftGripPositionPx = sliderWidthPx;
+                }
             }
 
             // this can happen because the user can click on the left handle!
@@ -488,19 +652,10 @@
             if (_is_mousedown) {
                 // our slider element.
                 var $this = _$current_slider,
-                    settings = $this.data('settings'),
                     sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
-                    $leftGrip = $this.find(settings.left_grip_selector),
-                    $rightGrip = $this.find(settings.right_grip_selector),
-                    leftGripPositionPx = parseInt($leftGrip.css('left').replace('px',''), 10);
+                    leftGripPositionPx = _methods.getLeftGripPositionPx.call($this);
 
-                var rightGripPositionPx;
-                if ($this.data('has_right_grip')) {
-                    rightGripPositionPx = parseInt($rightGrip.css('left').replace('px',''), 10);
-                }
-                else {
-                    rightGripPositionPx = _methods.rangemap_0_to_n.call($this, $this.data('cur_max'), sliderWidthPx);
-                }
+                var rightGripPositionPx = _methods.getRightGripPositionPx.call($this);
 
                 //
                 // Here we are going to set the position in pixels based on
@@ -616,26 +771,7 @@
                     }
                 }
 
-                //
-                // Validate & Move
-                //
-                if (nextRightGripPositionPx <= sliderWidthPx && 
-                    nextLeftGripPositionPx >= 0 &&
-                    nextLeftGripPositionPx <= sliderWidthPx && 
-                    (!$this.data('has_right_grip') || nextLeftGripPositionPx <= nextRightGripPositionPx) ) {
-
-                    var prev_min = $this.data('cur_min'),                        
-                        prev_max = $this.data('cur_max');       
-
-                    // note: also stores new cur_min, cur_max
-                    _methods.set_position_from_px.call($this, nextLeftGripPositionPx, nextRightGripPositionPx);
-
-                    // set the style of the grips according to the highlighted range
-                    _methods.refresh_grips_style.call($this);
-
-                    _methods.notify_changed_implicit.call($this, 'drag_move', prev_min, prev_max);
-
-                }
+                _methods.validateAndMoveGripsToPx.call($this, nextLeftGripPositionPx, nextRightGripPositionPx);
  
                 // prepare for next movement
                 _original_mousex = absoluteMousePosition;
@@ -780,10 +916,15 @@
             return force;
         },
         'notify_changed_explicit' : function (cause, prevMin, prevMax, curMin, curMax) {
-            var $this = this;
+            var $this = this,
+                settings = $this.data('settings');
 
-            var value_changed_callback = $this.data('value_changed_callback');
-            value_changed_callback.call($this, cause, curMin, curMax, prevMin, prevMax);
+            // maybe update aria attributes for accessibility
+            if ($this.data('aria_enabled')) {
+                _methods.updateAriaAttributes.call($this);
+            }
+
+            settings.value_changed_callback.call($this, cause, curMin, curMax, prevMin, prevMax);
 
             return $this;
         },
@@ -881,16 +1022,20 @@
             $this.removeData();
 
             // unbind the document as well
-            var $document = $(document);
-            $document.unbind('mousemove.nstSlider');
-            $document.unbind('mouseup.nstSlider');
+            $(document)
+                .unbind('mousemove.nstSlider')
+                .unbind('mouseup.nstSlider');
 
             // unbind events bound to the container element
-            var $container = $this.parent();
-            $container.unbind('mousedown.nstSlider');
-            $container.unbind('touchstart.nstSlider');
-            $container.unbind('touchmove.nstSlider');
-            $container.unbind('touchend.nstSlider');
+            $this.parent()
+                .unbind('mousedown.nstSlider')
+                .unbind('touchstart.nstSlider')
+                .unbind('touchmove.nstSlider')
+                .unbind('touchend.nstSlider');
+            
+            // unbind events bound to the current element
+            $this.unbind('keydown.nstSlider')
+                .unbind('keyup.nstSlider');
 
             return $this;
         },
@@ -1010,12 +1155,153 @@
                     $left_grip = $(left_grip),
                     $right_grip = $($this.find(settings.right_grip_selector)[0]);
 
+                // make sure left grip can be tabbed if the user hasn't
+                // defined their own tab index
+                if (typeof $left_grip.attr('tabindex') === 'undefined') {
+                    $left_grip.attr('tabindex', 0);
+                }
+
                 // no right handler means single handler
                 var has_right_grip = false;
                 if ($this.find(settings.right_grip_selector).length > 0) {
                     has_right_grip = true;
+
+                    // make sure right grip can be tabbed if the user hasn't
+                    // defined their own tab index
+                    if (typeof $right_grip.attr('tabindex') === 'undefined') {
+                        $right_grip.attr('tabindex', 0);
+                    }
                 }
                 $this.data('has_right_grip', has_right_grip);
+
+                // enable aria attributes update?
+                if ($this.data('aria_enabled') === true) {
+                    // setup aria role attributes on each grip
+                    $left_grip.attr('role', 'slider');
+                    if (has_right_grip) {
+                        $right_grip.attr('role', 'slider');
+                    }
+                }
+
+                //
+                // deal with keypresses here
+                //
+                $this.bind('keyup.nstSlider', function (e) {
+                    switch (e.which) {
+                        case 37:   // left
+                        case 38:   // up
+                        case 39:   // right 
+                        case 40:   // down
+
+                        if (_before_keydown_value === _before_keyup_value) {
+
+                            // we should search for the next value change...
+                            // ... in which direction? depends on whe
+
+                            var searchUntil = _methods.getSliderWidthPx.call($this),
+                                val,
+                                i,
+                                setAtPixel;
+
+                            if (_before_keydown_pixel - _before_keyup_pixel < 0) {
+                                // the grip was moved towards the right
+
+                                for (i=_before_keyup_pixel; i<=searchUntil; i++) {
+                                    // if the value at pixel i is different than
+                                    // the current value then we are good to go.
+                                    //
+                                    val = methods.round_value_according_to_rounding.call($this,
+                                        _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
+                                    );
+                                    if (val !== _before_keyup_value) {
+                                        setAtPixel = i;
+                                        break;
+                                    }
+                                }
+                            }
+                            else {
+                                // the grip was moved towards the left
+
+                                for (i=_before_keyup_pixel; i>=0; i--) {
+
+                                    // if the value at pixel i is different than
+                                    // the current value then we are good to go.
+                                    //
+                                    val = methods.round_value_according_to_rounding.call($this,
+                                        _methods.getSliderValuesAtPositionPx.call($this, i, i)[1]
+                                    );
+                                    if (val !== _before_keyup_value) {
+                                       setAtPixel = i;
+                                       break;
+                                    }
+                                }
+                            }
+
+
+                            // we need to set the slider at this position
+                            if (_is_left_grip) {
+                                _methods.validateAndMoveGripsToPx.call($this, setAtPixel, _methods.getRightGripPositionPx.call($this));
+                            }
+                            else {
+                                _methods.validateAndMoveGripsToPx.call($this, _methods.getLeftGripPositionPx.call($this), setAtPixel);
+                            }
+
+                        }
+                    }
+
+                    // clear values 
+                    _before_keydown_value = undefined;
+                    _before_keydown_pixel = undefined;
+                    _before_keyup_value = undefined;
+                    _before_keyup_pixel = undefined;
+                });
+                $this.bind('keydown.nstSlider', function (evt) {
+
+                    var moveHandleBasedOnKeysFunc = function ($grip, e) {
+
+                        var nextLeft = _methods.getLeftGripPositionPx.call($this),
+                            nextRight = _methods.getRightGripPositionPx.call($this);
+
+                        if (typeof _before_keydown_value === 'undefined') {
+                            _before_keydown_pixel = _is_left_grip ? nextLeft : nextRight;
+
+                            _before_keydown_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
+                        }
+
+                        switch (e.which) {
+                            case 37:   // left
+                            case 38:   // up
+                                if (_is_left_grip) { nextLeft--; } else { nextRight--; }
+                                e.preventDefault();
+                                break;
+
+                            case 39:   // right 
+                            case 40:   // down
+                                if (_is_left_grip) { nextLeft++; } else { nextRight++; }
+
+                                e.preventDefault();
+                                break;
+                        }
+
+                        _before_keyup_pixel = _is_left_grip ?  nextLeft : nextRight;
+
+                        // may write into cur_min, cur_max data...
+                        _methods.validateAndMoveGripsToPx.call($this, nextLeft, 
+                            nextRight);
+
+                        _before_keyup_value = _is_left_grip ? methods.get_current_min_value.call($this) : methods.get_current_max_value.call($this);
+                    };
+                    
+                    // default
+                    if (has_right_grip && $this.find(':focus').is($right_grip)) {
+                        _is_left_grip = false;
+                        moveHandleBasedOnKeysFunc.call($this, $right_grip, evt);
+                    }
+                    else {
+                        _is_left_grip = true;
+                        moveHandleBasedOnKeysFunc.call($this, $left_grip, evt);
+                    }
+                });
 
                 // determine size of grips
                 var left_grip_width = _methods.getLeftGripWidth.call($this),
@@ -1026,7 +1312,6 @@
                 $this.data('right_grip_width', right_grip_width);
 
                 $this.data('value_bar_selector', settings.value_bar_selector);
-                $this.data('value_changed_callback', settings.value_changed_callback);
 
                 // this will set the range to the right extreme in such a case.
                 if (rangeMin === rangeMax || valueMin === valueMax) {
