@@ -131,7 +131,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'build:dev');
 
   // Build dev task
-  grunt.registerTask('build:dev', ['less', 'jshint', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('build:dev', ['jshint', 'clean', 'concat', 'uglify', 'less']);
 
   // Test task
   grunt.registerTask('test', ['connect', 'jshint', 'qunit']);
