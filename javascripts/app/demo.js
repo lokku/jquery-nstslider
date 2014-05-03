@@ -91,7 +91,7 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                           text.push('aria-valuemin: ' + $grip.attr('aria-valuemin'));
                           text.push('aria-valuenow: ' + $grip.attr('aria-valuenow'));
                           text.push('aria-valuemax: ' + $grip.attr('aria-valuemax'));
-                          text.push('aria-disabled' + $grip.attr('aria-disabled'));
+                          text.push('aria-disabled: ' + $grip.attr('aria-disabled'));
 
                           $('.ariaAttributesAsText').html(text.join('<br />'));
 
