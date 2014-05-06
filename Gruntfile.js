@@ -75,13 +75,24 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          compress: true,
-          yuicompress: true,
-          optimization: 2
+          compress: false,
+          ieCompat: true,
+//          dumpLineNumbers: 'all'
         },
         files: {
           // target.css file: source.less file
           "dist/jquery.nstSlider.css" : "src/jquery.nstSlider.less"
+        }
+      }
+    },
+
+    cssmin: {
+      development: {
+        options: {
+        },
+        files: {
+          // target: source
+          "dist/jquery.nstSlider.min.css" : "dist/jquery.nstSlider.css"
         }
       }
     },
@@ -101,7 +112,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: ['src/*.less'],
-        tasks: ['less'],
+        tasks: ['less','cssmin'],
         options: {
           nospawn: true
         }
@@ -126,12 +137,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task
   grunt.registerTask('default', 'build:dev');
 
   // Build dev task
-  grunt.registerTask('build:dev', ['jshint', 'clean', 'concat', 'uglify', 'less']);
+  grunt.registerTask('build:dev', ['jshint', 'clean', 'concat', 'uglify', 'less', 'cssmin']);
 
   // Test task
   grunt.registerTask('test', ['connect', 'jshint', 'qunit']);

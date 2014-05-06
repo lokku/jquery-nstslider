@@ -1,6 +1,6 @@
 {
-  "name": "jquery-plugin",
-  "version": "0.0.0-ignored",
+  "name": "jquery-nstSlider",
+  "version": "1.0.2",
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -16,6 +16,7 @@
     "grunt-contrib-less": "~0.5.0",
     "grunt-contrib-qunit": "~0.2.0",
     "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-watch": "~0.4.0"
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-contrib-cssmin": "~0.9.0"
   }
 }
