@@ -16,7 +16,7 @@ $(".mySlider").nstSlider({
     "left_grip_selector": ".leftGrip",
     "right_grip_selector": ".rightGrip",
     "value_bar_selector": ".bar",
-    "value_changed_callback": function(cause, minValue, maxValue) {
+    "value_changed_callback": function(cause, minValue, maxValue, prevMinValue, prevMaxValue) {
         // show the suggested values in your min/max labels elements
     }
 });
@@ -49,7 +49,7 @@ left_grip_selector | string | .nst-slider-grip-left | the selector of the left g
 right_grip_selector | string | undefined | the selector of the right grip handle. This is optional. A single handler bar is assumed if this selector is not specified.
 value_bar_selector | string | undefined  | the selector of the value bar. If not specified assumes a value bar representing the selection is not wanted.
 rounding | object or number | 1 | the rounding for a certain value displayed on the slider. It can be a fixed number or an object like: { '1' : '100', '10' : '1000', '50' : '10000' } 
-value_changed_callback | function | function(cause, vmin, vmax) { return; } | a callback called whenever the user drags one of the handles.
+value_changed_callback | function | function(cause, curMin, curMax, prevMin, prevMax) { return; } | a callback called whenever the user drags one of the handles.
 user_mouseup_callback | function | function(vmin, vmax, left_grip_moved) { return; } | a callback called whenever the mouse button pressed while dragging a slider grip is released
 user_drag_start_callback | function | function () { return; } | a callback called before the user drags one of the handles
 
