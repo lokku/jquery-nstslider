@@ -789,31 +789,7 @@
                 _is_mousedown = false;
                 _original_mousex = undefined;
 
-                var current_min_value = methods.get_current_min_value.call($this),
-                    current_max_value = methods.get_current_max_value.call($this);
-
-                if (($this.data('beforestart_min') !== current_min_value) || 
-                    ($this.data('beforestart_max') !== current_max_value)
-                ) {
-                    // save the new values
-                    $this.data('beforestart_min', current_min_value);
-                    $this.data('beforestart_max', current_max_value);
-
-                    _user_mouseup_callback.call($this, 
-                        methods.get_current_min_value.call($this),
-                        methods.get_current_max_value.call($this),
-                        _is_left_grip,
-                        true   // values did change
-                    );
-                }
-                else {
-                    _user_mouseup_callback.call($this, 
-                        methods.get_current_min_value.call($this),
-                        methods.get_current_max_value.call($this),
-                        _is_left_grip,
-                        false  // values didn't change
-                    );
-                }
+                _methods.notify_mouse_up_implicit.call($this, _is_left_grip);
 
                 // require another click on a handler before going into here again!
                 _$current_slider = undefined;
@@ -885,6 +861,39 @@
                 }
             }
             return rounding;
+        },
+        /*
+         * Calls the user mouseup callback with the right parameters. Relies on
+         * $data('beforestart_min/max') in addition to the isLeftGrip parameter.
+         *
+         * NOTE: saves the new beforestart_min and begforestart_max as well.
+         */
+        'notify_mouse_up_implicit' : function(isLeftGrip) {
+            var $this = this,
+                current_min_value = methods.get_current_min_value.call($this),
+                current_max_value = methods.get_current_max_value.call($this),
+                didValuesChange = false;
+
+            // check if we changed.
+            if (($this.data('beforestart_min') !== current_min_value) || 
+                ($this.data('beforestart_max') !== current_max_value)
+            ) {
+                // values have changed!
+                didValuesChange = true;
+
+                // save the new values
+                $this.data('beforestart_min', current_min_value);
+                $this.data('beforestart_max', current_max_value);
+            }
+
+            _user_mouseup_callback.call($this, 
+                methods.get_current_min_value.call($this),
+                methods.get_current_max_value.call($this),
+                isLeftGrip,
+                didValuesChange
+            );
+
+            return $this;
         },
         /*
          * NOTE: this method may take the previous min/max value as input.
@@ -1252,6 +1261,10 @@
                                     _methods.validateAndMoveGripsToPx.call($this, _methods.getLeftGripPositionPx.call($this), setAtPixel);
                                 }
 
+                                //
+                                // call the mouseup callback when the key is up!
+                                //
+                                _methods.notify_mouse_up_implicit.call($this, _is_left_grip);
                             }
                         }
 
