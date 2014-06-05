@@ -446,17 +446,16 @@
                 touch = original_event.touches[0];
 
             // for touch devices we need to make sure we allow the user to scroll
-            // if the click was too far from the value bar.
+            // if the click was too far from the slider.
             var curY = touch.pageY,
                 curX = touch.pageX;
 
             // is the user allowed to grab if he/she tapped too far from the
-            // actual value bar?
-            var $bar = $this.find(settings.value_bar_selector),
-                ydelta = Math.abs($bar.offset().top - curY),
-                bar_left = $bar.offset().left,
-                xldelta = bar_left - curX,
-                xrdelta = curX - (bar_left + $bar.width());
+            // slider?
+            var ydelta = Math.abs($this.offset().top - curY),
+                slider_left = $this.offset().left,
+                xldelta = slider_left - curX,
+                xrdelta = curX - (slider_left + $this.width());
 
             if (ydelta > settings.touch_tolerance_value_bar_y  ||
                 xldelta > settings.touch_tolerance_value_bar_x ||
