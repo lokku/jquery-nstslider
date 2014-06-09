@@ -97,6 +97,7 @@
           basicSliderWithParametersAndNonDefaultLeftGrip : $('#basicSliderWithParametersAndNonDefaultLeftGrip'),
           basicSliderWithParametersAndNonDefaultRightGrip : $('#basicSliderWithParametersAndNonDefaultRightGrip'),
           basicSliderWithCrossingLimits : $('#basicSliderWithCrossingLimits'),
+          sliderWithNoBarAndLabels: $('#sliderWithNoBarAndLabels'),
           sliderWithRounding : $('#sliderWithRounding'),
           sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
           sliderWithBar : $('#sliderWithBar'),
@@ -883,4 +884,36 @@
         equal($accessibleSlider.find('.left').attr('aria-disabled'), 'false', 'aria-disabled is false on left grip after enable is called');
         equal($accessibleSlider.find('.right').attr('aria-disabled'), 'false', 'aria-disabled is false on right grip after enable is called');
   });
+
+  test("slider can be dragged on touch devices when no value bar is defined", 3, function () {
+        // expect(1+2);
+        var that = this,
+            dragTriggered = false;
+
+        var $sliderWithoutValueBar = $(that.sliders.sliderWithNoBarAndLabels).nstSlider({
+             left_grip_selector : '.left',
+             right_grip_selector : '.right',
+             user_drag_start_callback : function () {
+                dragTriggered = true;
+             }
+        });
+
+        $.when(
+            $sliderWithoutValueBar.trigger($.Event('touchstart', {
+                originalEvent: {
+                    touches: [
+                        {
+                            pageX: 20,
+                            pageY: parseInt( that.sliders.sliderWithNoBarAndLabels.position().top, 10)
+                        }
+                    ],
+                    preventDefault: function () { } // mock: no-op
+                }
+            }))
+        )
+        .then(function () {
+            ok(dragTriggered, 'drag start event was triggered');
+        });
+  });
+
 }(jQuery));
