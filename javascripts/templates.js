@@ -1,43 +1,43 @@
 define(['vendor/underscore'], function (_) { var templates = {};
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/accessibleSlider.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/accessibleSlider.tpl]
 // Template name: [accessibleSlider]
 //
 templates['accessibleSlider'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<!-- specify data-aria_enabled="true" -->\n<div class="slider" data-aria_enabled="true"\n    data-range_min="-100" data-range_max="100" data-cur_min="-50" data-cur_max="50">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<!-- used to display the aria attributes (just as a demo) -->\n<div class="ariaAttributesAsText"></div>\n';
+__p+='<!-- specify data-aria_enabled="true" -->\n<div class="nstSlider" data-aria_enabled="true"\n    data-range_min="-100" data-range_max="100" data-cur_min="-50" data-cur_max="50">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<!-- used to display the aria attributes (just as a demo) -->\n<div class="ariaAttributesAsText"></div>\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/basicSliderMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/basicSliderMarkup.tpl]
 // Template name: [basicSliderMarkup]
 //
 templates['basicSliderMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="-10" data-range_max="100" \n                    data-cur_min="20"    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
+__p+='<div class="nstSlider" data-range_min="-10" data-range_max="100" \n                       data-cur_min="20"    data-cur_max="80">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/customizationMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/customizationMarkup.tpl]
 // Template name: [customizationMarkup]
 //
 templates['customizationMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="0" data-range_max="100"\n                    data-cur_min="10"  data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
+__p+='<div class="nstSlider" data-range_min="0" data-range_max="100"\n                       data-cur_min="10"  data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/demoSection.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/demoSection.tpl]
 // Template name: [demoSection]
 //
 templates['demoSection'] = function(obj){
@@ -73,7 +73,7 @@ __p+='\n                '+
  } 
 __p+='\n        </script>\n    </div>\n    <h3>HTML</h3>\n    <pre class="prettyprint lang-html">\n'+
 ((__t=( markup_escaped ))==null?'':__t)+
-'\n    </pre>\n    <h3>Javascript</h3>\n    <pre class="prettyprint lang-javascript linenums">\n$(\'.slider\').nstSlider('+
+'\n    </pre>\n    <h3>Javascript</h3>\n    <pre class="prettyprint lang-javascript linenums">\n$(\'.nstSlider\').nstSlider('+
 ((__t=( pluginOptions.replace(/</g,'&lt;').replace(/>/g, '&gt;') ))==null?'':__t)+
 ');\n';
  if (typeof extraJavascript !== 'undefined') { 
@@ -87,19 +87,19 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
 // Template name: [distributionBasedIncrementsMarkup]
 //
 templates['distributionBasedIncrementsMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="0" data-range_max="100" \n                    data-cur_min="40"  data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a id="changeStepIncrement" onclick="return false;">Use Histogram-Based Increment Step</a>\n';
+__p+='<div class="nstSlider" data-range_min="0" data-range_max="100" \n                       data-cur_min="40"  data-cur_max="70">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a id="changeStepIncrement" onclick="return false;">Use Histogram-Based Increment Step</a>\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginMethods.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginMethods.tpl]
 // Template name: [pluginMethods]
 //
 templates['pluginMethods'] = function(obj){
@@ -137,7 +137,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/pluginSettings.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginSettings.tpl]
 // Template name: [pluginSettings]
 //
 templates['pluginSettings'] = function(obj){
@@ -163,19 +163,19 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
 // Template name: [rangeHighlightMarkup]
 //
 templates['rangeHighlightMarkup'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="0" data-range_max="100"\n                    data-cur_min="10"  data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a href="#" onclick="return false;" id="highlightRangeButton">Highlight Random Range</a>\n';
+__p+='<div class="nstSlider" data-range_min="0" data-range_max="100"\n                       data-cur_min="10"  data-cur_max="90">\n\n    <div class="highlightPanel"></div>\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n\n<div class="leftLabel" />\n<div class="rightLabel" />\n\n<a href="#" onclick="return false;" id="highlightRangeButton">Highlight Random Range</a>\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/scrollSpy.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/scrollSpy.tpl]
 // Template name: [scrollSpy]
 //
 templates['scrollSpy'] = function(obj){
@@ -197,25 +197,25 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSlider.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSlider.tpl]
 // Template name: [singleHandlerSlider]
 //
 templates['singleHandlerSlider'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="-127" data-range_max="127" \n                    data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="nstSlider" data-range_min="-127" data-range_max="127" \n                       data-cur_min="0">\n\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }
 
 //
-// Source file: [/Users/darksmo/working/mimosa-projects/nstSlider/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
 // Template name: [singleHandlerSliderFixedBar]
 //
 templates['singleHandlerSliderFixedBar'] = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="slider" data-range_min="-127" data-range_max="127"\n                    data-cur_min="80"     data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
+__p+='<div class="nstSlider" data-range_min="-127" data-range_max="127"\n                       data-cur_min="80"     data-cur_max="0">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n</div>\n<div class="leftLabel" />\n';
 }
 return __p;
 }

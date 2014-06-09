@@ -1,12 +1,6 @@
-/*
- * jQuery Nestoria Slider 1.0.1
- *
- * Slide between a maximum and a minimum value.
- *
- * Copyright 2014, Lokku Ltd.
- * Free to use and abuse under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- */
+/*! Nestoria Slider - v1.0.3 - 2014-06-09
+* http://lokku.github.io/jquery-nstslider/
+* Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
     /* 
      * These are used for user interaction. This plugin assumes the user can
