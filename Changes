@@ -1,3 +1,5 @@
+v1.0.3 Mon Jun  9 11:55:12 CEST 2014
+    * improve support for single slider without value bar for touch devices
 
 v1.0.2 Fri May  2 23:43:19 BST 2014
     * added keyboard support
