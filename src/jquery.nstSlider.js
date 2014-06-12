@@ -1666,8 +1666,7 @@
             // cdf and the inverted cdf.
             //
             var pixel_to_value_mapping = function (pixel) {
-
-                return pixel_to_value_lookup[pixel];
+                return pixel_to_value_lookup[parseInt(pixel, 10)];
             };
 
             var value_to_pixel_mapping = function (value) {
