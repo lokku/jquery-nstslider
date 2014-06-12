@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.3 - 2014-06-09
+/*! Nestoria Slider - v1.0.4 - 2014-06-12
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -1660,8 +1660,7 @@
             // cdf and the inverted cdf.
             //
             var pixel_to_value_mapping = function (pixel) {
-
-                return pixel_to_value_lookup[pixel];
+                return pixel_to_value_lookup[parseInt(pixel, 10)];
             };
 
             var value_to_pixel_mapping = function (value) {
