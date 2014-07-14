@@ -439,6 +439,7 @@
             
         },
         'drag_start_func_touch' : function (e, settings, $left_grip, $right_grip, is_touch) {
+            e.preventDefault();
             var $this = this,
                 original_event = e.originalEvent,
                 touch = original_event.touches[0];
@@ -471,6 +472,7 @@
         },
         'drag_start_func' : function (e, settings, $leftGrip, $rightGrip, 
                 is_touch) {
+            e.preventDefault();
 
             var $this = this;
 
