@@ -439,7 +439,6 @@
             
         },
         'drag_start_func_touch' : function (e, settings, $left_grip, $right_grip, is_touch) {
-            e.preventDefault();
             var $this = this,
                 original_event = e.originalEvent,
                 touch = original_event.touches[0];
@@ -472,7 +471,6 @@
         },
         'drag_start_func' : function (e, settings, $leftGrip, $rightGrip, 
                 is_touch) {
-            e.preventDefault();
 
             var $this = this;
 
@@ -638,9 +636,10 @@
             _methods.refresh_grips_style.call($this);
 
             _methods.notify_changed_implicit.call($this, 'drag_start', prev_min, prev_max);
+
+            e.preventDefault();
         },
         'drag_move_func_touch' : function (e) {
-            e.preventDefault();
             if (_is_mousedown === true) {
                 var original_event = e.originalEvent;
                 original_event.preventDefault();
@@ -649,7 +648,6 @@
             }
         },
         'drag_move_func' : function (e) {
-            e.preventDefault();
             if (_is_mousedown) {
                 // our slider element.
                 var $this = _$current_slider,
@@ -776,6 +774,8 @@
  
                 // prepare for next movement
                 _original_mousex = absoluteMousePosition;
+
+                e.preventDefault();
             }
         },
         'drag_end_func_touch' : function (e) {
