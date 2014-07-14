@@ -638,6 +638,7 @@
             _methods.notify_changed_implicit.call($this, 'drag_start', prev_min, prev_max);
         },
         'drag_move_func_touch' : function (e) {
+            e.preventDefault();
             if (_is_mousedown === true) {
                 var original_event = e.originalEvent;
                 original_event.preventDefault();
@@ -646,6 +647,7 @@
             }
         },
         'drag_move_func' : function (e) {
+            e.preventDefault();
             if (_is_mousedown) {
                 // our slider element.
                 var $this = _$current_slider,
