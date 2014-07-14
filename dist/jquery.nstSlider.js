@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.4 - 2014-06-12
+/*! Nestoria Slider - v1.0.5 - 2014-07-14
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -632,6 +632,8 @@
             _methods.refresh_grips_style.call($this);
 
             _methods.notify_changed_implicit.call($this, 'drag_start', prev_min, prev_max);
+
+            e.preventDefault();
         },
         'drag_move_func_touch' : function (e) {
             if (_is_mousedown === true) {
@@ -768,6 +770,8 @@
  
                 // prepare for next movement
                 _original_mousex = absoluteMousePosition;
+
+                e.preventDefault();
             }
         },
         'drag_end_func_touch' : function (e) {

@@ -903,6 +903,7 @@
                 originalEvent: {
                     touches: [
                         {
+                            preventDefault: function () { }, // mock: no-op
                             pageX: 20,
                             pageY: parseInt( that.sliders.sliderWithNoBarAndLabels.position().top, 10)
                         }
