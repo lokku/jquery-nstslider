@@ -887,7 +887,7 @@
 
       equal(
           $sliderWithBarAndHighlight.find('.highlightPanel').width(),
-          163,
+          179,
           "expected width found for the highlight panel after highlighting a range"
       );
 

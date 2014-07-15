@@ -1787,7 +1787,7 @@
             // we need to map rangeMin and rangeMax into pixels.
             var leftPx = _methods.valueToPx.call($this, rangeMin),
                 rightPx = _methods.valueToPx.call($this, rangeMax),
-                barWidth = rightPx - leftPx;
+                barWidth = rightPx - leftPx + $this.data('left_grip_width');
 
             // set position
             var $highlightPanel = $this.find(
