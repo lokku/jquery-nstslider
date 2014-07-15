@@ -101,6 +101,7 @@
           sliderWithRounding : $('#sliderWithRounding'),
           sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
           sliderWithBar : $('#sliderWithBar'),
+          sliderWithBarAndHighlight : $('#sliderWithBarAndHighlight'),
           accessibleSlider : $('#accessibleSlider')
       };
     },
@@ -856,6 +857,40 @@
       ok($sliderWithBar.nstSlider('set_step_histogram', [ 
           1, 1, 2, 40, 128, 200, 10, 5, 1, 1
       ]), 'step histogram is set');
+
+  });
+
+  test("Highlighted range is calculated based on the histogram previously set", function () {
+      var $sliderWithBarAndHighlight = $(this.sliders.sliderWithBarAndHighlight);
+      
+      // initialize...
+      $sliderWithBarAndHighlight.nstSlider({
+           'left_grip_selector' : '.left',
+           'right_grip_selector' : '.right',
+           'value_bar_selector' : '.bar',
+           'highlight': {
+              'grip_class' : 'hi',
+              'panel_selector': '.highlightPanel'
+           }
+      });
+
+      // setup some fake widths for the slider and the left grip
+      // this is necessary for the width() 
+      $sliderWithBarAndHighlight.width(300);
+      $sliderWithBarAndHighlight.data('left_grip_width', 16);
+
+      $sliderWithBarAndHighlight.nstSlider('set_step_histogram', [ 
+            4, 6, 3, 20, 30, 82, 107, 75, 82, 30, 20, 3, 2, 4, 1
+      ]);
+
+      $sliderWithBarAndHighlight.nstSlider('highlight_range', 40, 60);
+
+      equal(
+          $sliderWithBarAndHighlight.find('.highlightPanel').width(),
+          163,
+          "expected width found for the highlight panel after highlighting a range"
+      );
+
 
   });
 
