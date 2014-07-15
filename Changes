@@ -1,4 +1,7 @@
-v1.0.5  Mon Jul 14 18:07:45 CEST 2014
+v1.0.6 Tue Jul 15 09:00:05 CEST 2014
+    * fix issue #11: calculate slider range correctly for histogram based slider
+
+v1.0.5 Mon Jul 14 18:07:45 CEST 2014
     * fix issue #9: text on the page selected while dragging the slider
 
 v1.0.4 Thu Jun 12 11:25:36 CEST 2014

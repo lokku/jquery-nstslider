@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.5 - 2014-07-15
+/*! Nestoria Slider - v1.0.6 - 2014-07-15
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -1783,7 +1783,7 @@
             // we need to map rangeMin and rangeMax into pixels.
             var leftPx = _methods.valueToPx.call($this, rangeMin),
                 rightPx = _methods.valueToPx.call($this, rangeMax),
-                barWidth = rightPx - leftPx;
+                barWidth = rightPx - leftPx + $this.data('left_grip_width');
 
             // set position
             var $highlightPanel = $this.find(
