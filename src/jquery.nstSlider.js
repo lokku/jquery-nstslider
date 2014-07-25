@@ -1361,7 +1361,7 @@
 
                 // pass a closure, so that 'this' will be the current slider bar,
                 // not the container.
-                $container.bind('mousedown.nstSlider', function (e) {
+                $this.bind('mousedown.nstSlider', function (e) {
                     _methods.drag_start_func.call($this, e, settings, $left_grip, $right_grip, false);
                 });
                 
