@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.6 - 2014-07-15
+/*! Nestoria Slider - v1.0.6 - 2014-07-25
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -10,7 +10,6 @@
     var _$current_slider;
     var _is_mousedown;
     var _original_mousex;
-    var _user_mouseup_callback;
 
     // both for keyboard and mouse interaction
     var _is_left_grip;
@@ -888,7 +887,10 @@
                 $this.data('beforestart_max', current_max_value);
             }
 
-            _user_mouseup_callback.call($this, 
+
+            var settings = $this.data('settings');
+
+            settings.user_mouseup_callback.call($this, 
                 methods.get_current_min_value.call($this),
                 methods.get_current_max_value.call($this),
                 isLeftGrip,
@@ -1099,13 +1101,12 @@
             //
             var $document = $(document);
 
+            // make sure only one event is bound to the document
             $document.unbind('mouseup.nstSlider');
             $document.unbind('mousemove.nstSlider');
+
             $document.bind('mousemove.nstSlider', _methods.drag_move_func);
             $document.bind('mouseup.nstSlider',   _methods.drag_end_func);
-
-            // make this function available for updates...
-            _user_mouseup_callback = settings.user_mouseup_callback;
 
             return this.each(function() {
                 //
@@ -1356,7 +1357,7 @@
 
                 // pass a closure, so that 'this' will be the current slider bar,
                 // not the container.
-                $container.bind('mousedown.nstSlider', function (e) {
+                $this.bind('mousedown.nstSlider', function (e) {
                     _methods.drag_start_func.call($this, e, settings, $left_grip, $right_grip, false);
                 });
                 
