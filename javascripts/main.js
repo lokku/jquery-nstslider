@@ -39,4 +39,5 @@
         var view = new MethodsView();
         view.render('#methods');
     });
+
 });

@@ -233,7 +233,7 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                   ])
               }));
 
-              prettyPrint.prettyPrint();
+              window.prettyPrint();
           };
 
           return DemoView;
