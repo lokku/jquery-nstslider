@@ -1,3 +1,6 @@
+v1.0.7 Sat Jul 26 11:18:08 CEST 2014
+    * fix issue #12: correctly handle mouseup events with multiple sliders
+
 v1.0.6 Tue Jul 15 09:00:05 CEST 2014
     * fix issue #11: calculate slider range correctly for histogram based slider
 

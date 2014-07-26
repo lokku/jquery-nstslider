@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.6 - 2014-07-25
+/*! Nestoria Slider - v1.0.7 - 2014-07-26
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
