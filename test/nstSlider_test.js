@@ -102,7 +102,9 @@
           sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
           sliderWithBar : $('#sliderWithBar'),
           sliderWithBarAndHighlight : $('#sliderWithBarAndHighlight'),
-          accessibleSlider : $('#accessibleSlider')
+          accessibleSlider : $('#accessibleSlider'),
+          mouseupTestSliderA: $('#mouseupTestSliderA'),
+          mouseupTestSliderB: $('#mouseupTestSliderB')
       };
     },
     // This will run after each test in this module.
@@ -950,6 +952,78 @@
         .then(function () {
             ok(dragTriggered, 'drag start event was triggered');
         });
+  });
+
+  test("correct mouse events are triggered when two sliders are in the document", function () {
+      var eventsTriggered = {
+        mouseup : {
+            'sliderA' : 0,
+            'sliderB' : 0
+        },
+        dragstart: {
+            'sliderA' : 0,
+            'sliderB' : 0
+        },
+        changed: {
+            'sliderA' : 0,
+            'sliderB' : 0
+        }
+      };
+
+      var $sliderA = this.sliders.mouseupTestSliderA.nstSlider({
+          'left_grip_selector': '#gripA',
+          'value_bar_selector': '#barA',
+          'user_mouseup_callback': function() {
+              eventsTriggered.mouseup.sliderA++;
+          },
+          'user_drag_start_callback': function() {
+              eventsTriggered.dragstart.sliderA++;
+          },
+          'value_changed_callback': function(reason) {
+              if (reason !== 'init') {
+                  eventsTriggered.changed.sliderA++;
+              }
+          }
+      });
+
+      var $sliderB = this.sliders.mouseupTestSliderB.nstSlider({
+          'left_grip_selector': '#gripB',
+          'value_bar_selector': '#barB',
+          'user_mouseup_callback': function() {
+              eventsTriggered.mouseup.sliderB++;
+          },
+          'user_drag_start_callback': function() {
+              eventsTriggered.dragstart.sliderB++;
+          },
+          'value_changed_callback': function(reason) {
+              if (reason !== 'init') {
+                  eventsTriggered.changed.sliderB++;
+              }
+          }
+      });
+
+      $.when(
+          $sliderA
+            .trigger($.Event('mousedown', {}))
+            .trigger($.Event('mousemove', {}))
+            .trigger($.Event('mouseup', {}))
+      )
+      .then(
+          $sliderB
+            .trigger($.Event('mousedown', {}))
+            .trigger($.Event('mousemove', {}))
+            .trigger($.Event('mouseup', {}))
+      )
+      .then(function () {
+          equal(eventsTriggered.dragstart.sliderA, 1, "mousedown triggered once on slider A");
+          equal(eventsTriggered.changed.sliderA, 1, "mousemove triggered once on slider A");
+          equal(eventsTriggered.mouseup.sliderA, 1,   "mouseup triggered once on slider A");
+
+          equal(eventsTriggered.dragstart.sliderB, 1, "mousedown triggered once on slider B");
+          equal(eventsTriggered.changed.sliderB, 1, "mousemove triggered once on slider B");
+          equal(eventsTriggered.mouseup.sliderB, 1,   "mouseup triggered once on slider B");
+      });
+    
   });
 
 }(jQuery));
