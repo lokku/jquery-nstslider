@@ -1,7 +1,7 @@
 define(['vendor/underscore'], function (_) { var templates = {};
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/accessibleSlider.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/accessibleSlider.tpl]
 // Template name: [accessibleSlider]
 //
 templates['accessibleSlider'] = function(obj){
@@ -13,7 +13,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/basicSliderMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/basicSliderMarkup.tpl]
 // Template name: [basicSliderMarkup]
 //
 templates['basicSliderMarkup'] = function(obj){
@@ -25,7 +25,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/customizationMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/customizationMarkup.tpl]
 // Template name: [customizationMarkup]
 //
 templates['customizationMarkup'] = function(obj){
@@ -37,7 +37,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/demoSection.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/demoSection.tpl]
 // Template name: [demoSection]
 //
 templates['demoSection'] = function(obj){
@@ -87,7 +87,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/distributionBasedIncrementsMarkup.tpl]
 // Template name: [distributionBasedIncrementsMarkup]
 //
 templates['distributionBasedIncrementsMarkup'] = function(obj){
@@ -99,7 +99,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginMethods.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginMethods.tpl]
 // Template name: [pluginMethods]
 //
 templates['pluginMethods'] = function(obj){
@@ -137,7 +137,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginSettings.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/pluginSettings.tpl]
 // Template name: [pluginSettings]
 //
 templates['pluginSettings'] = function(obj){
@@ -163,7 +163,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/rangeHighlightMarkup.tpl]
 // Template name: [rangeHighlightMarkup]
 //
 templates['rangeHighlightMarkup'] = function(obj){
@@ -175,7 +175,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/scrollSpy.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/scrollSpy.tpl]
 // Template name: [scrollSpy]
 //
 templates['scrollSpy'] = function(obj){
@@ -197,7 +197,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSlider.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSlider.tpl]
 // Template name: [singleHandlerSlider]
 //
 templates['singleHandlerSlider'] = function(obj){
@@ -209,7 +209,7 @@ return __p;
 }
 
 //
-// Source file: [/Users/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/singleHandlerSliderFixedBar.tpl]
 // Template name: [singleHandlerSliderFixedBar]
 //
 templates['singleHandlerSliderFixedBar'] = function(obj){

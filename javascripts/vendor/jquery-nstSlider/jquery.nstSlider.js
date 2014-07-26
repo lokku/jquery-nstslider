@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.5 - 2014-07-14
+/*! Nestoria Slider - v1.0.7 - 2014-07-26
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -10,7 +10,6 @@
     var _$current_slider;
     var _is_mousedown;
     var _original_mousex;
-    var _user_mouseup_callback;
 
     // both for keyboard and mouse interaction
     var _is_left_grip;
@@ -306,6 +305,25 @@
                 $rightGrip.addClass(highlightGripClass);
             }
         },
+        /*
+         * Utility function. Given a value within the range of the slider,
+         * converts the value in pixels. If a value_to_pixel_mapping function
+         * is defined it will be used, otherwise a linear mapping is used for
+         * the conversion.
+         */
+        'valueToPx' : function (value) {
+            var $this = this,
+                value_to_pixel_mapping_func = $this.data('value_to_pixel_mapping');
+
+            // try using non-linear mapping if it's there...
+            if (typeof value_to_pixel_mapping_func !== 'undefined') {
+                return value_to_pixel_mapping_func(value); 
+            }
+
+            // ... use linear mapping otherwise
+            var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
+            return _methods.rangemap_0_to_n.call($this, value, w);
+        },
         /* 
          *  Set left and right handle at the right position on the screen (pixels) 
          *  given the desired position in currency.
@@ -340,22 +358,8 @@
                 cur_max = $this.data('cur_max');
             }
 
-            //
-            // if a non-linear mapping exists, then use it to find out the pixel
-            // we want to place this slider on...
-            //
-            var leftPx, rightPx;
-            var value_to_pixel_mapping_func = $this.data('value_to_pixel_mapping');
-            if (typeof value_to_pixel_mapping_func !== 'undefined') {
-                leftPx = value_to_pixel_mapping_func(cur_min); 
-                rightPx = value_to_pixel_mapping_func(cur_max);
-            }
-            else {
-                // ... use a linear mapping otherwise.
-                var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
-                leftPx = _methods.rangemap_0_to_n.call($this, cur_min, w);
-                rightPx = _methods.rangemap_0_to_n.call($this, cur_max, w);
-            }
+            var leftPx = _methods.valueToPx.call($this, cur_min),
+                rightPx = _methods.valueToPx.call($this, cur_max);
 
             _methods.set_handles_at_px.call($this, leftPx, rightPx);
 
@@ -883,7 +887,10 @@
                 $this.data('beforestart_max', current_max_value);
             }
 
-            _user_mouseup_callback.call($this, 
+
+            var settings = $this.data('settings');
+
+            settings.user_mouseup_callback.call($this, 
                 methods.get_current_min_value.call($this),
                 methods.get_current_max_value.call($this),
                 isLeftGrip,
@@ -1094,13 +1101,12 @@
             //
             var $document = $(document);
 
+            // make sure only one event is bound to the document
             $document.unbind('mouseup.nstSlider');
             $document.unbind('mousemove.nstSlider');
+
             $document.bind('mousemove.nstSlider', _methods.drag_move_func);
             $document.bind('mouseup.nstSlider',   _methods.drag_end_func);
-
-            // make this function available for updates...
-            _user_mouseup_callback = settings.user_mouseup_callback;
 
             return this.each(function() {
                 //
@@ -1351,7 +1357,7 @@
 
                 // pass a closure, so that 'this' will be the current slider bar,
                 // not the container.
-                $container.bind('mousedown.nstSlider', function (e) {
+                $this.bind('mousedown.nstSlider', function (e) {
                     _methods.drag_start_func.call($this, e, settings, $left_grip, $right_grip, false);
                 });
                 
@@ -1485,6 +1491,14 @@
                 methods.get_current_min_value.call($this),
                 methods.get_current_max_value.call($this)
             );
+
+            // re-highlight the range
+            var highlightRangeMin = $this.data('highlightedRangeMin');
+            if (typeof highlightRangeMin === 'number') {
+                // a highlight range is present, we must update it
+                var highlightRangeMax = $this.data('highlightedRangeMax');
+                methods.highlight_range.call($this, highlightRangeMin, highlightRangeMax);
+            }
 
             _methods.notify_changed_implicit.call($this, 'refresh');
             return $this;
@@ -1768,10 +1782,9 @@
             if (!rangeMax) { rangeMax = 0; }
 
             // we need to map rangeMin and rangeMax into pixels.
-            var sliderWidth =  _methods.getSliderWidthPx.call($this),
-            leftPx = _methods.rangemap_0_to_n.call($this, rangeMin, sliderWidth),
-            rightPx = _methods.rangemap_0_to_n.call($this, rangeMax, sliderWidth),
-            barWidth = rightPx - leftPx;
+            var leftPx = _methods.valueToPx.call($this, rangeMin),
+                rightPx = _methods.valueToPx.call($this, rangeMax),
+                barWidth = rightPx - leftPx + $this.data('left_grip_width');
 
             // set position
             var $highlightPanel = $this.find(
