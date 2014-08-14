@@ -435,12 +435,12 @@ section {
 }
 .demo .widget .leftLabel {
   position: absolute;
-  left: -35px;
+  left: -60px;
   top: 0;
 }
 .demo .widget .rightLabel {
   position: absolute;
-  right: -30px;
+  right: -50px;
   top: 0;
 }
 .demo .widget .highlightPanel {

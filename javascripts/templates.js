@@ -175,6 +175,18 @@ return __p;
 }
 
 //
+// Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/roundingIncrementsMarkup.tpl]
+// Template name: [roundingIncrementsMarkup]
+//
+templates['roundingIncrementsMarkup'] = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="nstSlider" data-range_min="100" data-range_max="100000" \n                       data-cur_min="0"  data-cur_max="100000">\n\n    <div class="bar"></div>\n    <div class="leftGrip"></div>\n    <div class="rightGrip"></div>\n</div>\n<div class="leftLabel" />\n<div class="rightLabel" />\n';
+}
+return __p;
+}
+
+//
 // Source file: [/home/darksmo/gits/jquery-nstslider-gh-pages/assets/javascripts/app/template/scrollSpy.tpl]
 // Template name: [scrollSpy]
 //

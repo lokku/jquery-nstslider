@@ -233,6 +233,36 @@ define(['jquery', 'nstSlider', 'templates', 'jsbeautify', 'prettify'],
                   ])
               }));
 
+              //
+              // Rounded range values
+              //
+              markup = templates.roundingIncrementsMarkup();
+
+              $(element).append(templates.demoSection({
+                  id: 'rounding_based',
+                  title: 'Rounded Increment Steps',
+                  description: '<p>When your range involves big numbers you can ask jquery.nstSlider.js to round them for you.<br /><br />In this example, the <b>rounding</b> parameter is used to round the values of the slider to a certain digit. The rounding parameter is an object in which keys identify the <b>multiplier</b> used when rounding, and values identify the <b>interval</b> in which this multiplier should be applied.<br /><br />Below we are using a two digits multiplier of "100", for integers that fall in the interval [0, 999] (expressed with "1,000" in the "rounding" object). A three digits multiplier (i.e., "1,000") is used to round integers that fall in the interval [1,000, 9,999], and a 4 digits multiplier to round integers that range between 10,000 and 99,999.</p>',
+                  markup: markup,
+                  markup_escaped: markup.replace(/</g,'&lt;').replace(/>/g, '&gt;'),
+                  pluginClass: 'nstSlider',
+                  pluginName: 'nstSlider',
+                  pluginOptions: objectToString({
+                      'rounding' : {
+                          '100' : '1000',
+                          '1000' : '10000',
+                          '10000' : '100000',
+                      },
+                      'left_grip_selector' : '.leftGrip',
+                      'right_grip_selector' : '.rightGrip',
+                      'value_bar_selector' : '.bar',
+                      'value_changed_callback' : function (cause, leftValue, rightValue) {
+                          var $container = $(this).parent();
+                          $container.find('.leftLabel').text(leftValue);
+                          $container.find('.rightLabel').text(rightValue);
+                      }
+                  })
+              }));
+
               window.prettyPrint();
           };
 
