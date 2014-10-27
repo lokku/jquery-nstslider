@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.7 - 2014-07-26
+/*! Nestoria Slider - v1.0.8 - 2014-10-27
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -305,25 +305,6 @@
                 $rightGrip.addClass(highlightGripClass);
             }
         },
-        /*
-         * Utility function. Given a value within the range of the slider,
-         * converts the value in pixels. If a value_to_pixel_mapping function
-         * is defined it will be used, otherwise a linear mapping is used for
-         * the conversion.
-         */
-        'valueToPx' : function (value) {
-            var $this = this,
-                value_to_pixel_mapping_func = $this.data('value_to_pixel_mapping');
-
-            // try using non-linear mapping if it's there...
-            if (typeof value_to_pixel_mapping_func !== 'undefined') {
-                return value_to_pixel_mapping_func(value); 
-            }
-
-            // ... use linear mapping otherwise
-            var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
-            return _methods.rangemap_0_to_n.call($this, value, w);
-        },
         /* 
          *  Set left and right handle at the right position on the screen (pixels) 
          *  given the desired position in currency.
@@ -358,8 +339,8 @@
                 cur_max = $this.data('cur_max');
             }
 
-            var leftPx = _methods.valueToPx.call($this, cur_min),
-                rightPx = _methods.valueToPx.call($this, cur_max);
+            var leftPx = methods.value_to_px.call($this, cur_min),
+                rightPx = methods.value_to_px.call($this, cur_max);
 
             _methods.set_handles_at_px.call($this, leftPx, rightPx);
 
@@ -1782,8 +1763,8 @@
             if (!rangeMax) { rangeMax = 0; }
 
             // we need to map rangeMin and rangeMax into pixels.
-            var leftPx = _methods.valueToPx.call($this, rangeMin),
-                rightPx = _methods.valueToPx.call($this, rangeMax),
+            var leftPx = methods.value_to_px.call($this, rangeMin),
+                rightPx = methods.value_to_px.call($this, rangeMax),
                 barWidth = rightPx - leftPx + $this.data('left_grip_width');
 
             // set position
@@ -1889,7 +1870,26 @@
                 $.error('rounding must be > 0, got ' + rounding + ' instead');
             }
             return v;
-        }
+        },
+        /*
+         * Utility function. Given a value within the range of the slider,
+         * converts the value in pixels. If a value_to_pixel_mapping function
+         * is defined it will be used, otherwise a linear mapping is used for
+         * the conversion.
+         */
+        'value_to_px' : function (value) {
+            var $this = this,
+                value_to_pixel_mapping_func = $this.data('value_to_pixel_mapping');
+
+            // try using non-linear mapping if it's there...
+            if (typeof value_to_pixel_mapping_func !== 'undefined') {
+                return value_to_pixel_mapping_func(value); 
+            }
+
+            // ... use linear mapping otherwise
+            var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
+            return _methods.rangemap_0_to_n.call($this, value, w);
+        },
     };
 
     var __name__ = 'nstSlider';

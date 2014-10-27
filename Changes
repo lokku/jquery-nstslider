@@ -1,3 +1,6 @@
+v1.0.8 Mon Oct 27 21:33:36 CET 2014
+    * public value_to_px method to (see pull request at https://github.com/lokku/jquery-nstslider/pull/15)
+
 v1.0.7 Sat Jul 26 11:18:08 CEST 2014
     * fix issue #12: correctly handle mouseup events with multiple sliders
 
