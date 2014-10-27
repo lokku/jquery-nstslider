@@ -954,6 +954,26 @@
         });
   });
 
+  test("can get corresponding pixel value", function () {
+      var $slider = buildSlider(this.sliders.sliderWithRounding, {
+          'rounding' : 10, 'range_min' : 5, 'range_max' : 95,
+          'cur_min' : 30, 'cur_max' : 60
+      });
+
+      // mock a slider width and a left grip width otherwise they are going to
+      // take the maximum space available...
+      $slider.data('left_grip_width', 20);
+      $slider.css('width', 500);
+
+      equal($slider.nstSlider('value_to_px', 5), 0, "min range");
+      equal($slider.nstSlider('value_to_px', 95), 480, "max range");
+      equal($slider.nstSlider('value_to_px', 9999), 480, "exceed max range");
+      equal($slider.nstSlider('value_to_px', 0), 0, "exceed min range");
+      equal($slider.nstSlider('value_to_px', -999), 0, "exceed min range (negative value)");
+      equal($slider.nstSlider('value_to_px', 50), 240, "inbetween value");
+
+  });
+
   test("correct mouse events are triggered when two sliders are in the document", function () {
       var eventsTriggered = {
         mouseup : {
