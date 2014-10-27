@@ -1893,7 +1893,8 @@
                 $.error('rounding must be > 0, got ' + rounding + ' instead');
             }
             return v;
-        }
+        },
+        'valueToPx': _methods.valueToPx
     };
 
     var __name__ = 'nstSlider';
