@@ -74,6 +74,7 @@ set_range | rangeMin : number, rangeMax : number | set the minimum and the maxim
 set_rounding | rounding: number or object | set the rounding for the slider
 get_rounding | None | return the current rounding of the slider
 teardown | None | remove all data stored in the slider
+value_to_px | number | given a value in the range of the slider, returns the corresponding value in pixel relative to the slider width
 
 #### Dependencies
 
