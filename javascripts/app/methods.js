@@ -36,6 +36,11 @@ define(['jquery', 'templates'],
                         'description' : 'return a boolean indicating whether or not the left handler is moved all the way to the left'
                       },
                       {
+                        'name' : 'value_to_px',
+                        'arguments': 'number',
+                        'description': 'given a value in the range of the slider, returns the corresponding value in pixel relative to the slider width'
+                      },
+                      {
                         'name' : 'is_handle_to_right_extreme',
                         'arguments' : 'None',
                         'description' : 'return a boolean indicating whether or not the right handler is moved all the way to the right'
