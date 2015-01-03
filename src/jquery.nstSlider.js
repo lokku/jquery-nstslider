@@ -677,10 +677,10 @@
                     // if handles are not crossable, we should define the left
                     // and the right boundary of the movement.
                     if (_is_left_grip) {
-                        drag_area_end = rightGripPositionPx + $this.data('left_grip_width');
+                        drag_area_end = drag_area_start + rightGripPositionPx - ($this.data('left_grip_width') / 2);
                     }
                     else {
-                        drag_area_start = leftGripPositionPx + $this.data('left_grip_width');
+                        drag_area_start = drag_area_start + leftGripPositionPx - ($this.data('left_grip_width') / 2);
                     }
                 }
  
