@@ -1,3 +1,6 @@
+Next version: 
+    * crossable_handles feature (see https://github.com/lokku/jquery-nstslider/issues/16)
+
 v1.0.8 Mon Oct 27 21:33:36 CET 2014
     * public value_to_px method to (see pull request at https://github.com/lokku/jquery-nstslider/pull/15)
 

@@ -1,6 +1,6 @@
-/*! Nestoria Slider - v1.0.8 - 2014-10-27
+/*! Nestoria Slider - v1.0.8 - 2015-01-03
 * http://lokku.github.io/jquery-nstslider/
-* Copyright (c) 2014 Lokku Ltd.; Licensed MIT */
+* Copyright (c) 2015 Lokku Ltd.; Licensed MIT */
 (function($) {
     /* 
      * These are used for user interaction. This plugin assumes the user can
@@ -50,6 +50,7 @@
           */
          'validateAndMoveGripsToPx' : function (nextLeftGripPositionPx, nextRightGripPositionPx) {
              var $this = this;
+
              var draggableAreaLengthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
 
              //
@@ -632,6 +633,7 @@
             if (_is_mousedown) {
                 // our slider element.
                 var $this = _$current_slider,
+                    settings = $this.data('settings'),
                     sliderWidthPx = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width'),
                     leftGripPositionPx = _methods.getLeftGripPositionPx.call($this);
 
@@ -666,6 +668,17 @@
                 //    considered to be valid.
                 var drag_area_start = $this.offset().left + $this.data('left_grip_width'),
                     drag_area_end = drag_area_start + sliderWidthPx;
+
+                if (settings.crossable_handles === false && $this.data('has_right_grip')) {
+                    // if handles are not crossable, we should define the left
+                    // and the right boundary of the movement.
+                    if (_is_left_grip) {
+                        drag_area_end = rightGripPositionPx + $this.data('left_grip_width');
+                    }
+                    else {
+                        drag_area_start = leftGripPositionPx + $this.data('left_grip_width');
+                    }
+                }
  
                 // 2) by default we accept to move the slider according to both
                 // the deltas (i.e., left or right)
@@ -686,7 +699,9 @@
                 //
                 // Here we decide whether to invert the grip being moved.
                 //
-                if ($this.data('has_right_grip')) {
+                if (settings.crossable_handles === true && 
+                    $this.data('has_right_grip')) {
+
                     if (_is_left_grip) {
 
                         // ... if we are using the left grip
@@ -1069,6 +1084,10 @@
 
                 // if the bar is not wanted
                 'value_bar_selector': undefined,
+
+                // Allow handles to cross each other while one of them is being
+                // dragged. This option is ignored if just one handle is used.
+                'crossable_handles': true,
 
                 'value_changed_callback': function(/*cause, vmin, vmax*/) { return; },
                 'user_mouseup_callback' : function(/*vmin, vmax, left_grip_moved*/) { return; },
