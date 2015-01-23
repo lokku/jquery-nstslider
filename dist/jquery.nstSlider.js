@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.8 - 2015-01-03
+/*! Nestoria Slider - v1.0.9 - 2015-01-23
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2015 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -514,7 +514,7 @@
             // point where the click happened, meaning the slider grip will be
             // spanning to the right.
             //
-            curX = e.pageX - ($this.data('left_grip_width') / 2);
+            curX = Math.round(e.pageX) - ($this.data('left_grip_width') / 2);
 
             // calculate deltas from left and right grip
             ldist = Math.abs(lleft - curX);
@@ -645,7 +645,7 @@
                 // position of the mouse cursors via e.pageX, which returns the
                 // absolute position of the mouse on the screen.
                 //
-                var absoluteMousePosition = e.pageX;
+                var absoluteMousePosition = Math.round(e.pageX);
 
                 //
                 // Compute the delta (in px) for the slider movement. It is the
@@ -666,17 +666,18 @@
 
                 // 1) calculate the area within which the movement is
                 //    considered to be valid.
-                var drag_area_start = $this.offset().left + $this.data('left_grip_width'),
+                var half_a_grip_width = $this.data('left_grip_width') / 2,
+                    drag_area_start = $this.offset().left + $this.data('left_grip_width') - half_a_grip_width,
                     drag_area_end = drag_area_start + sliderWidthPx;
 
                 if (settings.crossable_handles === false && $this.data('has_right_grip')) {
                     // if handles are not crossable, we should define the left
                     // and the right boundary of the movement.
                     if (_is_left_grip) {
-                        drag_area_end = drag_area_start + rightGripPositionPx - ($this.data('left_grip_width') / 2);
+                        drag_area_end = drag_area_start + rightGripPositionPx;
                     }
                     else {
-                        drag_area_start = drag_area_start + leftGripPositionPx - ($this.data('left_grip_width') / 2);
+                        drag_area_start = drag_area_start + leftGripPositionPx;
                     }
                 }
  

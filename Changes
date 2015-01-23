@@ -1,4 +1,4 @@
-Next version: 
+v1.0.9 Fri Jan 23 23:41:56 CET 2015
     * crossable_handles feature (see https://github.com/lokku/jquery-nstslider/issues/16)
     * fix imprecise slider movement when IE zoom is enabled (see https://github.com/lokku/jquery-nstslider/issues/17)
     * fix slider grip being dragged when mouse hits against its rightmost edge
