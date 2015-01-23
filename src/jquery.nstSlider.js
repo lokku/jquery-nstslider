@@ -518,7 +518,7 @@
             // point where the click happened, meaning the slider grip will be
             // spanning to the right.
             //
-            curX = e.pageX - ($this.data('left_grip_width') / 2);
+            curX = Math.round(e.pageX) - ($this.data('left_grip_width') / 2);
 
             // calculate deltas from left and right grip
             ldist = Math.abs(lleft - curX);
@@ -649,7 +649,7 @@
                 // position of the mouse cursors via e.pageX, which returns the
                 // absolute position of the mouse on the screen.
                 //
-                var absoluteMousePosition = e.pageX;
+                var absoluteMousePosition = Math.round(e.pageX);
 
                 //
                 // Compute the delta (in px) for the slider movement. It is the
