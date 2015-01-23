@@ -670,17 +670,18 @@
 
                 // 1) calculate the area within which the movement is
                 //    considered to be valid.
-                var drag_area_start = $this.offset().left + $this.data('left_grip_width'),
+                var half_a_grip_width = $this.data('left_grip_width') / 2,
+                    drag_area_start = $this.offset().left + $this.data('left_grip_width') - half_a_grip_width,
                     drag_area_end = drag_area_start + sliderWidthPx;
 
                 if (settings.crossable_handles === false && $this.data('has_right_grip')) {
                     // if handles are not crossable, we should define the left
                     // and the right boundary of the movement.
                     if (_is_left_grip) {
-                        drag_area_end = drag_area_start + rightGripPositionPx - ($this.data('left_grip_width') / 2);
+                        drag_area_end = drag_area_start + rightGripPositionPx;
                     }
                     else {
-                        drag_area_start = drag_area_start + leftGripPositionPx - ($this.data('left_grip_width') / 2);
+                        drag_area_start = drag_area_start + leftGripPositionPx;
                     }
                 }
  
