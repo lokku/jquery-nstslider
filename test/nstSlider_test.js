@@ -1063,7 +1063,7 @@
         if (x < array[idx]) { return -1; }
         if (x > array[idx]) { return 1; }
         return 0;
-    }
+    };
 
 
     equal(bSearchMethod([3, 4, 45, 123, 254, 300], 3, getElementFunc, compareFunc), 0, "left extreme");
