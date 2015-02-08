@@ -1029,6 +1029,7 @@
 
     };
     var methods = {
+        '_m' : function (m) { return _methods[m]; }, // for test, removed by Grunt
         'teardown' : function () {
             var $this = this;
 
@@ -1913,7 +1914,7 @@
             // ... use linear mapping otherwise
             var w = _methods.getSliderWidthPx.call($this) - $this.data('left_grip_width');
             return _methods.rangemap_0_to_n.call($this, value, w);
-        },
+        }
     };
 
     var __name__ = 'nstSlider';

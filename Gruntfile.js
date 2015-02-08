@@ -22,7 +22,11 @@ module.exports = function(grunt) {
     concat: {
       options: {
         banner: '<%= banner %>',
-        stripBanners: true
+        stripBanners: true,
+        process: function (src) {
+            // remove test method
+            return src.replace(/'_m'.+/g, "");
+        }
       },
       dist: {
         src: ['src/jquery.<%= pkg.name %>.js'],
