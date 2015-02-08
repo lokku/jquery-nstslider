@@ -889,7 +889,7 @@
 
       equal(
           $sliderWithBarAndHighlight.find('.highlightPanel').width(),
-          179,
+          180,
           "expected width found for the highlight panel after highlighting a range"
       );
 
@@ -1066,10 +1066,32 @@
     }
 
 
-    equal(0, bSearchMethod([3, 4, 45, 123, 254, 300], 3, getElementFunc, compareFunc), "left extreme");
-    equal(5, bSearchMethod([3, 4, 45, 123, 254, 300], 300, getElementFunc, compareFunc), "right extreme");
-    equal(2, bSearchMethod([3, 4, 45, 123, 254, 300], 45, getElementFunc, compareFunc), "inner element");
-    equal(-1, bSearchMethod([3, 4, 45, 123, 254, 300], -2, getElementFunc, compareFunc), "non existing element");
+    equal(bSearchMethod([3, 4, 45, 123, 254, 300], 3, getElementFunc, compareFunc), 0, "left extreme");
+    equal(bSearchMethod([3, 4, 45, 123, 254, 300], 300, getElementFunc, compareFunc), 5, "right extreme");
+    equal(bSearchMethod([3, 4, 45, 123, 254, 300], 45, getElementFunc, compareFunc), 2, "inner element");
+    equal(bSearchMethod([3, 4, 45, 123, 254, 300], -2, getElementFunc, compareFunc), -1, "non existing element");
+
+  });
+
+  test('binarySearchValueToPxCompareFunc works as expected', function () {
+    var $slider = buildSlider(this.sliders.sliderWithRounding, {
+        'rounding' : 10, 'range_min' : 5, 'range_max' : 95,
+        'cur_min' : 30, 'cur_max' : 60
+    });
+
+    var bSearchMethod = $slider.nstSlider('_m', 'binarySearch');
+    var getElementFunc = function (array, idx) {
+        return array[idx];
+    };
+    var compareFunc = $slider.nstSlider('_m', 'binarySearchValueToPxCompareFunc');
+
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 3, getElementFunc, compareFunc), 0, "left extreme");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 300, getElementFunc, compareFunc), 5, "right extreme");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 20, getElementFunc, compareFunc), 2, "inner element");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 3.9, getElementFunc, compareFunc), 1, "near left extreme case 1");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 4.1, getElementFunc, compareFunc), 1, "near left extreme case 2");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 249.9, getElementFunc, compareFunc), 5, "near right extreme case 1");
+    equal(bSearchMethod([3, 5, 50, 100, 200, 300], 250.1, getElementFunc, compareFunc), 5, "near right extreme case 2");
 
   });
 

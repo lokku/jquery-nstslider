@@ -207,6 +207,23 @@
 
             return Math.round($rightGrip.width());
          },
+         'binarySearchValueToPxCompareFunc' : function (s, a, i) {
+            // Must return:
+            //
+            // s: element to search for
+            // a: array we are looking in 
+            // i: position of the element we are looking for
+            //
+            // -1 (s < a[i])
+            // 0  found (= a[i])
+            // 1  (s > a[i])
+            if (s === a[i])          { return 0; }  // element found exactly
+            if (s < a[i] && i === 0) { return 0; }  // left extreme case e.g., a = [ 3, ... ], s = 1
+            if (a[i-1] <= s && s < a[i]) { return 0; } // s is between two elements, always return the rightmost
+            if (s > a[i])           { return 1;  }
+            if (s <= a[i-1])        { return -1; }
+            $.error('cannot compare s: ' + s + ' with a[' + i + ']. a is: ' + a.join(','));
+         },
          /*
           * Perform binary search to find searchElement into a generic array.
           * It uses a customized compareFunc to perform the comparison between
@@ -1688,30 +1705,28 @@
             };
 
             var value_to_pixel_mapping = function (value) {
-                // binary search into the array of pixels...
-                var pixel = _methods.binarySearch.call($this, pixel_to_value_lookup, value, 
+                //
+                // Binary search into the array of pixels, returns always the
+                // rightmost pixel if there is no exact match.
+                //
+                var suggestedPixel = _methods.binarySearch.call($this, pixel_to_value_lookup, value, 
                     function(a, i) { return a[i]; },  // access a value in the array
-
-                    // Must return:
-                    //
-                    // s: element to search for
-                    // a: array we are looking in 
-                    // i: position of the element we are looking for
-                    //
-                    // -1 (s < a[i])
-                    // 0  found (= a[i])
-                    // 1  (s > a[i])
-                    function (s, a, i) {
-                        if (s === a[i])          { return 0; }
-                        if (s < a[i] && i === 0) { return 0; }
-                        if (a[i-1] <= s && s < a[i]) { return 0; }
-                        if (s > a[i])           { return 1;  }
-                        if (s <= a[i-1])        { return -1; }
-                        $.error('cannot compare s: ' + s + ' with a[' + i + ']. a is: ' + a.join(','));
-                    }
+                    _methods.binarySearchValueToPxCompareFunc
                 );
 
-                return pixel;
+                // exact match
+                if (pixel_to_value_lookup[suggestedPixel] === value) {
+                    return suggestedPixel;
+                }
+
+                // approx match: we need to check if it's closer to the value
+                // at suggestedPixel or the value at suggestedPixel-1
+                if ( Math.abs(pixel_to_value_lookup[suggestedPixel-1] - value) <
+                     Math.abs(pixel_to_value_lookup[suggestedPixel] - value) ) {
+
+                     return suggestedPixel-1;
+                }
+                return suggestedPixel;
             };
 
             //
