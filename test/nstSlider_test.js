@@ -1046,4 +1046,31 @@
     
   });
 
+  test('binary search works', function () {
+    var $slider = buildSlider(this.sliders.sliderWithRounding, {
+        'rounding' : 10, 'range_min' : 5, 'range_max' : 95,
+        'cur_min' : 30, 'cur_max' : 60
+    });
+
+    var bSearchMethod = $slider.nstSlider('_m', 'binarySearch');
+    var getElementFunc = function (array, idx) {
+        return array[idx];
+    };
+    var compareFunc = function (x, array, idx) {
+        // lt = -1 (searchElement < currentElement)
+        // eq = 0 
+        // gt = 1  (searchElement > currentElement)
+        if (x < array[idx]) { return -1; }
+        if (x > array[idx]) { return 1; }
+        return 0;
+    }
+
+
+    equal(0, bSearchMethod([3, 4, 45, 123, 254, 300], 3, getElementFunc, compareFunc), "left extreme");
+    equal(5, bSearchMethod([3, 4, 45, 123, 254, 300], 300, getElementFunc, compareFunc), "right extreme");
+    equal(2, bSearchMethod([3, 4, 45, 123, 254, 300], 45, getElementFunc, compareFunc), "inner element");
+    equal(-1, bSearchMethod([3, 4, 45, 123, 254, 300], -2, getElementFunc, compareFunc), "non existing element");
+
+  });
+
 }(jQuery));
