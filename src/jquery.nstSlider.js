@@ -193,7 +193,7 @@
                 settings = $this.data('settings'),
                 $leftGrip = $this.find(settings.left_grip_selector);
 
-            return Math.round($leftGrip.width());
+            return Math.round($leftGrip.outerWidth());
          },
          /*
           * Return the width of the right grip. The calling method should
@@ -205,7 +205,7 @@
                 settings = $this.data('settings'),
                 $rightGrip = $this.find(settings.right_grip_selector);
 
-            return Math.round($rightGrip.width());
+            return Math.round($rightGrip.outerWidth());
          },
          'binarySearchValueToPxCompareFunc' : function (s, a, i) {
             // Must return:

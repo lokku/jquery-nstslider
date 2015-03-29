@@ -87,7 +87,8 @@
     setup: function() {
       // save original implementation of jquery
       this.originalFn = {
-         'width' : $.fn.width
+         'width' : $.fn.width,
+         'outerWidth': $.fn.outerWidth
          // add more here as they become needed...
       };
       this.sliders = {
@@ -829,18 +830,24 @@
       var $sliderWithBar = $(this.sliders.sliderWithBar);
       
       //
-      // we want to test what happens when this method returns floating point
+      // we want to test what happens when these methods return floating point
       // values. Hence we mock.
       //
-      $.fn.width = function () {
+      $.fn.outerWidth = function () {
           var $this = this;
           if      ($this.hasClass('left') ) { return 34.33;   }
           else if ($this.hasClass('right')) { return 34.33;   }
-          else if ($this.attr('id') === 'sliderWithBar') { return 123.343; }
           else {
-
               // fall back on the original method
-              that.originalFn.width.apply($this, arguments);
+              return that.originalFn.outerWidth.apply($this, arguments);
+          }
+      };
+      $.fn.width = function () {
+          var $this = this;
+          if ($this.attr('id') === 'sliderWithBar') { return 123.343; }
+          else {
+              // fall back on the original method
+              return that.originalFn.width.apply($this, arguments);
           }
       };
       
@@ -853,8 +860,8 @@
 
       // make sure we get a floating point width when we access the slider
       equal($sliderWithBar.width(), 123.343, 'Slider has a floating point width');
-      equal($sliderWithBar.find('.left').width(), 34.33, 'Slider left grip has a floating point width');
-      equal($sliderWithBar.find('.right').width(), 34.33, 'Slider left grip has a floating point width');
+      equal($sliderWithBar.find('.left').outerWidth(), 34.33, 'Slider left grip has a floating point width');
+      equal($sliderWithBar.find('.right').outerWidth(), 34.33, 'Slider left grip has a floating point width');
 
       ok($sliderWithBar.nstSlider('set_step_histogram', [ 
           1, 1, 2, 40, 128, 200, 10, 5, 1, 1
