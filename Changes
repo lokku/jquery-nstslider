@@ -1,5 +1,6 @@
-Next version
+v1.0.11 Thu Apr  9 08:02:17 CEST 2015
     * Use outerWidth() to calculate width of handles (see https://github.com/lokku/jquery-nstslider/issues/18)
+    * Stop calling preventDefault on touch events
 
 v1.0.10 Sun Feb  8 23:49:57 CET 2015
     * Fix bug in histogram based increment steps (see https://github.com/lokku/jquery-nstslider/commit/260f908a7e47d18532b594d6d673a561bc5de947)
