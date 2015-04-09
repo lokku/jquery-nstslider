@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.10 - 2015-02-08
+/*! Nestoria Slider - v1.0.10 - 2015-04-09
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2015 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -189,7 +189,7 @@
                 settings = $this.data('settings'),
                 $leftGrip = $this.find(settings.left_grip_selector);
 
-            return Math.round($leftGrip.width());
+            return Math.round($leftGrip.outerWidth());
          },
          /*
           * Return the width of the right grip. The calling method should
@@ -201,7 +201,7 @@
                 settings = $this.data('settings'),
                 $rightGrip = $this.find(settings.right_grip_selector);
 
-            return Math.round($rightGrip.width());
+            return Math.round($rightGrip.outerWidth());
          },
          'binarySearchValueToPxCompareFunc' : function (s, a, i) {
             // Must return:
@@ -636,7 +636,11 @@
 
             _methods.notify_changed_implicit.call($this, 'drag_start', prev_min, prev_max);
 
-            e.preventDefault();
+            // no need to call preventDefault on touch events, as we called
+            // preventDefault on the original event already
+            if (Object.prototype.toString.apply(e) !== "[object Touch]") {
+                e.preventDefault();
+            }
         },
         'drag_move_func_touch' : function (e) {
             if (_is_mousedown === true) {
@@ -789,7 +793,12 @@
                 // prepare for next movement
                 _original_mousex = absoluteMousePosition;
 
-                e.preventDefault();
+                
+                // no need to call preventDefault on touch events, as we called
+                // preventDefault on the original event already
+                if (Object.prototype.toString.apply(e) !== "[object Touch]") {
+                    e.preventDefault();
+                }
             }
         },
         'drag_end_func_touch' : function (e) {

@@ -640,7 +640,11 @@
 
             _methods.notify_changed_implicit.call($this, 'drag_start', prev_min, prev_max);
 
-            e.preventDefault();
+            // no need to call preventDefault on touch events, as we called
+            // preventDefault on the original event already
+            if (Object.prototype.toString.apply(e) !== "[object Touch]") {
+                e.preventDefault();
+            }
         },
         'drag_move_func_touch' : function (e) {
             if (_is_mousedown === true) {
@@ -793,7 +797,12 @@
                 // prepare for next movement
                 _original_mousex = absoluteMousePosition;
 
-                e.preventDefault();
+                
+                // no need to call preventDefault on touch events, as we called
+                // preventDefault on the original event already
+                if (Object.prototype.toString.apply(e) !== "[object Touch]") {
+                    e.preventDefault();
+                }
             }
         },
         'drag_end_func_touch' : function (e) {
