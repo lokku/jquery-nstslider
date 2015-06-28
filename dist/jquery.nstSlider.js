@@ -1,4 +1,4 @@
-/*! Nestoria Slider - v1.0.10 - 2015-04-09
+/*! Nestoria Slider - v1.0.12 - 2015-06-29
 * http://lokku.github.io/jquery-nstslider/
 * Copyright (c) 2015 Lokku Ltd.; Licensed MIT */
 (function($) {
@@ -398,6 +398,11 @@
 
             return $this;
         },
+        /*
+         * Updates the CSS of grips and bar so that the left grip appears at
+         * leftPx and the right grip appears at rightPx. Note: leftPx can be >
+         * rightPx.
+         */
         'set_handles_at_px' : function (leftPx, rightPx) {
             var $this = this;
             var settings = $this.data('settings');
@@ -406,33 +411,41 @@
                 right_grip_selector = settings.right_grip_selector,
                 value_bar_selector = settings.value_bar_selector;
 
-            var handleWidth = $this.data('left_grip_width'),
-                innerBarDeltaPx = handleWidth/2;
+            var handleWidth = $this.data('left_grip_width');
 
-            // set here
+            // The left grip
+            $this.find(left_grip_selector).css('left', leftPx + 'px');
+
+            // The right grip
+            $this.find(right_grip_selector).css('left', rightPx + 'px');
+
+            // The value bar
             if ($this.data('has_right_grip')) {
+                // If both the grips are there, the value bar must stick to
+                // beginning and the end of the grips. 
                 $this.find(value_bar_selector)
-                    .css('left', (leftPx + innerBarDeltaPx) + 'px')
-                    .css('width', (rightPx - leftPx + innerBarDeltaPx) + 'px');
-
-                $this.find(left_grip_selector).css('left', leftPx + 'px');
+                    .css('left', leftPx + 'px')
+                    .css('width', (rightPx - leftPx + handleWidth) + 'px');
             }
             else {
-                if (leftPx < rightPx) {
+                // In case of one grip, the naked end of the bar with no grip
+                // should be positioned at the middle value.
+
+                if (rightPx > leftPx) {
+                    // The naked end of the bar is on the right of the grip
+
                     $this.find(value_bar_selector)
-                        .css('left', (leftPx + innerBarDeltaPx) + 'px')
-                        .css('width', (rightPx - leftPx + innerBarDeltaPx) + 'px');
+                        .css('left', leftPx + 'px')
+                        .css('width', rightPx - leftPx + (handleWidth/2) + 'px');
                 }
                 else {
+                    // The naked end of the bar is on the left of the grip
+                    // NOTE: leftPx and rightPx are to be read swapped here.
                     $this.find(value_bar_selector)
-                        .css('left', (rightPx + innerBarDeltaPx) + 'px')
-                        .css('width', (leftPx - rightPx + innerBarDeltaPx) + 'px');
+                        .css('left', rightPx + (handleWidth/2) + 'px')
+                        .css('width', (leftPx - rightPx + (handleWidth/2)) + 'px');
                 }
-
-                $this.find(left_grip_selector).css('left', leftPx + 'px');
             }
-
-            $this.find(right_grip_selector).css('left', rightPx + 'px');
 
             return $this;
             

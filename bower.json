@@ -1,6 +1,6 @@
 {
   "name": "nstSlider",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "main": [
     "./dist/jquery.nstSlider.js"
   ],
