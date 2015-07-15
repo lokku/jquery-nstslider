@@ -24,7 +24,35 @@
     var _before_keyup_value;
     var _before_keyup_pixel;
 
+    // a fixed configuration for the single bar slider, used to decide where to
+    // place the naked bar.
+    var _naked_bar_deltas; // see populateNakedBarDeltas
+
     var _methods = {
+         /*
+          * This method must be called once during initialization.
+          * It sets the behaviour of the naked bar in case of one handle.
+          */
+         'setNakedBarDelta': function (position, handleWidth) {
+             if (position === "stickToSides") {
+                _naked_bar_deltas = {
+                    toEndWidth: handleWidth,
+                    toBeginLeft: 0,
+                    toBeginWidth: handleWidth
+                };
+             }
+             else if (position === "middle") {
+                // Position naked end of the bar at the middle value.
+                _naked_bar_deltas = {
+                    toEndWidth: handleWidth/2,
+                    toBeginLeft: handleWidth/2,
+                    toBeginWidth: handleWidth/2
+                };
+             }
+             else {
+                throw new Error('unknown position of setNakedBarDelta: ' + position);
+             }
+         },
          'getSliderValuesAtPositionPx' : function (leftPx, rightPx) {
               var $this = this,
                   leftPxInValue, rightPxInValue,
@@ -432,22 +460,22 @@
                     .css('width', (rightPx - leftPx + handleWidth) + 'px');
             }
             else {
-                // In case of one grip, the naked end of the bar with no grip
-                // should be positioned at the middle value.
+                if (!_naked_bar_deltas) {
+                    _methods.populateNakedBarDeltas.call($this, leftPx, rightPx, handleWidth);
+                }
 
                 if (rightPx > leftPx) {
                     // The naked end of the bar is on the right of the grip
-
                     $this.find(value_bar_selector)
                         .css('left', leftPx + 'px')
-                        .css('width', rightPx - leftPx + (handleWidth/2) + 'px');
+                        .css('width', rightPx - leftPx + _naked_bar_deltas.toEndWidth + 'px');
                 }
                 else {
                     // The naked end of the bar is on the left of the grip
                     // NOTE: leftPx and rightPx are to be read swapped here.
                     $this.find(value_bar_selector)
-                        .css('left', rightPx + (handleWidth/2) + 'px')
-                        .css('width', (leftPx - rightPx + (handleWidth/2)) + 'px');
+                        .css('left', rightPx + _naked_bar_deltas.toBeginLeft + 'px')
+                        .css('width', (leftPx - rightPx + _naked_bar_deltas.toBeginWidth) + 'px');
                 }
             }
 
@@ -1382,6 +1410,15 @@
                 $this.data('right_grip_width', right_grip_width);
 
                 $this.data('value_bar_selector', settings.value_bar_selector);
+
+                // set behaviour of naked bar in case of one handle
+                if (!has_right_grip) {
+                    var bStickToSides = valueMax === rangeMax || valueMax === rangeMin;
+                    _methods.setNakedBarDelta.call($this,
+                        bStickToSides ? "stickToSides" : "middle",
+                        left_grip_width
+                    );
+                }
 
                 // this will set the range to the right extreme in such a case.
                 if (rangeMin === rangeMax || valueMin === valueMax) {

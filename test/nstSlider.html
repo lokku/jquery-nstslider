@@ -5,8 +5,8 @@
   <title>Nestoria Slider Test Suite</title>
   <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
   <script src="../libs/jquery-loader.js"></script>
-  <!-- Load local QUnit. -->
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <link rel="stylesheet" href="../dist/jquery.nstSlider.css" media="screen">
   <script src="../libs/qunit/qunit.js"></script>
   <!-- Load local lib and tests. -->
   <script src="../src/jquery.nstSlider.js"></script>
@@ -16,6 +16,20 @@
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
+  <div class="nstSlider" id="mouseupTestSliderA"
+      data-range_min="0" data-range_max="100"   
+      data-cur_min="10"  data-cur_max="90">  
+                                              
+      <div class="bar" id="barA"></div>         
+      <div class="leftGrip" id="gripA"></div>             
+  </div>
+  <div class="nstSlider" id="mouseupTestSliderB"
+      data-range_min="0" data-range_max="100"   
+      data-cur_min="10"  data-cur_max="90">  
+                                              
+      <div class="bar"      id="barB"></div>             
+      <div class="leftGrip" id="gripB"></div>         
+  </div>
 
   <div id="manyBasicSliders">
       <div data-range_min="-10" data-range_max="100" data-cur_min="20"    data-cur_max="80">
@@ -130,6 +144,27 @@
                                               
       <div class="bar"      id="barB"></div>             
       <div class="leftGrip" id="gripB"></div>         
+  </div>
+  <div class="nstSlider" id="sliderSingleBarRight"
+      data-range_min="0" data-range_max="100"   
+      data-cur_min="50"  data-cur_max="100">  <!-- cur_max: bar sticks to the right -->
+                                              
+      <div class="bar"      id="barAllRight"></div>             
+      <div class="leftGrip" id="grip"></div>         
+  </div>
+  <div class="nstSlider" id="sliderSingleBarLeft"
+      data-range_min="0" data-range_max="100"   
+      data-cur_min="50"  data-cur_max="0">  <!-- cur_max: bar sticks to the left -->
+                                              
+      <div class="bar"      id="barAllLeft"></div>             
+      <div class="leftGrip" id="grip"></div>         
+  </div>
+  <div class="nstSlider" id="sliderSingleBarMiddle"
+      data-range_min="0" data-range_max="100"   
+      data-cur_min="0"  data-cur_max="50">  <!-- cur_max: bar sticks to the left -->
+                                              
+      <div class="bar"      id="barMiddle"></div>             
+      <div class="leftGrip" id="grip"></div>         
   </div>
 
   <div class="labelLeft"></div>

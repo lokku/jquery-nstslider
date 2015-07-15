@@ -35,6 +35,12 @@
 
       return list;
   },
+  getCssWidth = function ($element) {
+    return parseInt($element.css('width').replace('px', ''), 10);
+  },
+  getCssLeft = function ($element) {
+    return parseInt($element.css('left').replace('px', ''), 10);
+  },
   getBoundEventNamespaces = function ($element) {
         var namespaces = [];
         var eventsCollectionObj = $._data($element[0], "events");
@@ -92,20 +98,23 @@
          // add more here as they become needed...
       };
       this.sliders = {
-          manyBasicSliders : $('#manyBasicSliders').children(),
-          basicSliderWithParameters : $('#basicSliderWithParameters'),
-          basicSliderWithNoParameters : $('#basicSliderWithNoParameters'),
-          basicSliderWithParametersAndNonDefaultLeftGrip : $('#basicSliderWithParametersAndNonDefaultLeftGrip'),
-          basicSliderWithParametersAndNonDefaultRightGrip : $('#basicSliderWithParametersAndNonDefaultRightGrip'),
-          basicSliderWithCrossingLimits : $('#basicSliderWithCrossingLimits'),
+          manyBasicSliders: $('#manyBasicSliders').children(),
+          basicSliderWithParameters: $('#basicSliderWithParameters'),
+          basicSliderWithNoParameters: $('#basicSliderWithNoParameters'),
+          basicSliderWithParametersAndNonDefaultLeftGrip: $('#basicSliderWithParametersAndNonDefaultLeftGrip'),
+          basicSliderWithParametersAndNonDefaultRightGrip: $('#basicSliderWithParametersAndNonDefaultRightGrip'),
+          basicSliderWithCrossingLimits: $('#basicSliderWithCrossingLimits'),
           sliderWithNoBarAndLabels: $('#sliderWithNoBarAndLabels'),
-          sliderWithRounding : $('#sliderWithRounding'),
-          sliderWithLimitsAndRounding : $('#sliderWithLimitsAndRounding'),
-          sliderWithBar : $('#sliderWithBar'),
-          sliderWithBarAndHighlight : $('#sliderWithBarAndHighlight'),
-          accessibleSlider : $('#accessibleSlider'),
+          sliderWithRounding: $('#sliderWithRounding'),
+          sliderWithLimitsAndRounding: $('#sliderWithLimitsAndRounding'),
+          sliderWithBar: $('#sliderWithBar'),
+          sliderWithBarAndHighlight: $('#sliderWithBarAndHighlight'),
+          accessibleSlider: $('#accessibleSlider'),
           mouseupTestSliderA: $('#mouseupTestSliderA'),
-          mouseupTestSliderB: $('#mouseupTestSliderB')
+          mouseupTestSliderB: $('#mouseupTestSliderB'),
+          sliderSingleBarLeft: $("#sliderSingleBarLeft"),
+          sliderSingleBarRight: $("#sliderSingleBarRight"),
+          sliderSingleBarMiddle: $("#sliderSingleBarMiddle")
       };
     },
     // This will run after each test in this module.
@@ -981,7 +990,7 @@
 
   });
 
-  test("correct mouse events are triggered when two sliders are in the document", function () {
+  asyncTest("correct mouse events are triggered when two sliders are in the document", function () {
       var eventsTriggered = {
         mouseup : {
             'sliderA' : 0,
@@ -1031,24 +1040,29 @@
 
       $.when(
           $sliderA
-            .trigger($.Event('mousedown', {}))
-            .trigger($.Event('mousemove', {}))
-            .trigger($.Event('mouseup', {}))
+            .trigger($.Event('mousedown', {
+                pageX: getCssLeft($sliderA.find('.leftGrip')) - 20 // first mousemove
+            }))
+            .trigger($.Event('mouseup', {
+                pageX: getCssLeft($sliderA.find('.leftGrip'))
+            }))
       )
       .then(
           $sliderB
-            .trigger($.Event('mousedown', {}))
-            .trigger($.Event('mousemove', {}))
-            .trigger($.Event('mouseup', {}))
+            .trigger($.Event('mousedown', {
+                pageX: 10 // first mousemove
+            }))
+            .trigger($.Event('mouseup', {
+                pageX: getCssLeft($sliderB.find('.leftGrip')) // no mousemove
+            }))
       )
       .then(function () {
           equal(eventsTriggered.dragstart.sliderA, 1, "mousedown triggered once on slider A");
-          equal(eventsTriggered.changed.sliderA, 1, "mousemove triggered once on slider A");
           equal(eventsTriggered.mouseup.sliderA, 1,   "mouseup triggered once on slider A");
 
           equal(eventsTriggered.dragstart.sliderB, 1, "mousedown triggered once on slider B");
-          equal(eventsTriggered.changed.sliderB, 1, "mousemove triggered once on slider B");
           equal(eventsTriggered.mouseup.sliderB, 1,   "mouseup triggered once on slider B");
+          start();
       });
     
   });
@@ -1100,6 +1114,49 @@
     equal(bSearchMethod([3, 5, 50, 100, 200, 300], 249.9, getElementFunc, compareFunc), 5, "near right extreme case 1");
     equal(bSearchMethod([3, 5, 50, 100, 200, 300], 250.1, getElementFunc, compareFunc), 5, "near right extreme case 2");
 
+  });
+
+  test('single handled slider with bar all the way right has handle stuck to the right border', function () {
+    var $barRightSlider = this.sliders.sliderSingleBarRight.nstSlider({
+         'left_grip_selector' : '#grip',
+         'value_bar_selector' : '.bar'
+    });
+
+    var $bar = $barRightSlider.find(".bar");
+    var $grip = $barRightSlider.find("#grip");
+
+    equal($bar.css('left'), $grip.css('left'), "bar starts at the same position of the left handle");
+
+    equal($bar.css('width'), 
+        ($barRightSlider.css('width').replace('px', '') - $grip.css('left').replace('px', '')) + "px",
+        "bar starts on the handle edge");
+  });
+
+  test('single handled slider with bar all the way left has handle stuck to the left border', function () {
+    var $barLeftSlider = this.sliders.sliderSingleBarLeft.nstSlider({
+         'left_grip_selector' : '#grip',
+         'value_bar_selector' : '.bar'
+    });
+
+    var $bar = $barLeftSlider.find(".bar");
+    var $grip = $barLeftSlider.find("#grip");
+
+    equal($bar.css('width'), getCssLeft($grip) + getCssWidth($grip) + "px", "bar ends position of the left handle");
+
+    equal($bar.css('left'), "0px", "bar starts on the handle edge");
+  });
+
+  test('single handled slider with bar in the middle has bar exactly in the middle of the slider container', function () {
+    var $barMiddleSlider = this.sliders.sliderSingleBarMiddle.nstSlider({
+         'left_grip_selector' : '#grip',
+         'value_bar_selector' : '.bar'
+    });
+
+    var $bar = $barMiddleSlider.find(".bar");
+    var $grip = $barMiddleSlider.find("#grip");
+
+    equal($bar.css('width'), (getCssWidth($barMiddleSlider) / 2) + "px", "bar ends position of the left handle");
+    equal(getCssLeft($bar), getCssLeft($grip), "bar starts where the grip starts");
   });
 
 }(jQuery));
