@@ -1,3 +1,6 @@
+v1.0.13 Thu Jul 16 01:09:25 CEST 2015
+    * Fix one handle problem when bar is set fixed to extremities (see https://github.com/lokku/jquery-nstslider/issues/19)
+
 v1.0.12 Mon Jun 29 00:53:52 CEST 2015
     * Fix miscalculation of slider bar width (see https://github.com/lokku/jquery-nstslider/issues/19)
 
