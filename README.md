@@ -22,11 +22,18 @@ $(".mySlider").nstSlider({
 });
  ```
 
+Method call:
+
+```javascript
+$(".mySlider").nstSlider("set_position", 10 /* min */, 90 /* max */);
+```
+
 Destroy with:
 
 ```javascript
-$(".mySlider").nstSlider('teardown');
+$(".mySlider").nstSlider("teardown");
 ```
+
 
 #### Demo
 
@@ -56,7 +63,23 @@ user_drag_start_callback | function | function () { return; } | a callback calle
 
 #### Methods
 
-Method | Argument | Description
+When calling methods, use **positional** arguments. For example, for the
+`set_position` method, call:
+
+```javascript
+$(".mySlider").nstSlider("set_position", 10 /* min */, 90 /* max */);
+```
+
+do not call:
+
+```javascript
+$(".mySlider").nstSlider("set_position", { min: 10, max: 90 });
+```
+
+unless the documentation says that the first argument is an object.
+
+
+Method | Arguments (positional) | Description
 ------ | -------- | -----------
 get_range_min | None | return the current minimum range of the slider
 get_range_max | None | return the current maximum range of the slider
