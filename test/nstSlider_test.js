@@ -938,7 +938,7 @@
         equal($accessibleSlider.find('.right').attr('aria-disabled'), 'false', 'aria-disabled is false on right grip after enable is called');
   });
 
-  test("slider can be dragged on touch devices when no value bar is defined", 3, function () {
+  asyncTest("slider can be dragged on touch devices when no value bar is defined", 3, function () {
         // expect(1+2);
         var that = this,
             dragTriggered = false;
@@ -967,6 +967,7 @@
         )
         .then(function () {
             ok(dragTriggered, 'drag start event was triggered');
+            start();
         });
   });
 
