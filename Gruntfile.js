@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       files: ['test/**/*.html'],
       all: {
           options: {
-              urls: ['1.6.4', '1.7.0', '1.8.0', '1.9.0', '1.11.0', '2.0.0b1', '2.1.1-rc2'].map(function(version) {
+              urls: ['1.6.4', '1.7.0', '1.8.0', '1.9.0', '1.11.0', '2.0.0b1', '2.1.1-rc2', '3.1.0'].map(function(version) {
                   return 'http://localhost:<%= connect.server.options.port %>/test/nstSlider.html?jquery=' + version;
               })
           }
